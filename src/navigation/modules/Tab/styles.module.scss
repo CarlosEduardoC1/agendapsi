@@ -1,0 +1,26 @@
+@import "./src/styles/Global.scss";
+
+.tab-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    height: 80px;
+    padding: 0 20px;
+    background-color: black;
+}
+
+.tab-label {
+    color: #6C6C6C;
+}
+
+.tab-label-active {
+    color: #E91E63;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,31 @@
+.drawer-content-text {
+    font-size: 28px;
+    color: white;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    padding-left: 10px;
+    background-color: #182026;
+    height: 100vh;
+}
+
+.rest-pages {
+    background-color: #182026;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.pages-redirect {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.line {
+    width: 100vw;
+    background-color: #6c6c6c;
+    height: 2px;
+    margin-top: 15px;
+}

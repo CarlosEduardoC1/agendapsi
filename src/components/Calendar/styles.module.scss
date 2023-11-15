@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    align-items: center;
+}
+
+.content {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.days-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.selectable-days {
+    width: 15%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.today {
+    color: black;
+    background-color: red;
+}
+
+.weekend {
+    width: 15%;
+    text-align: center;
+    color: #313439;
+    font-weight: bold;
+}
