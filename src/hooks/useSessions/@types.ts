@@ -1,9 +1,9 @@
-import { Response, Sessions } from "@/@types";
+import { Response, Sessions } from "../../@types";
 
 export type UseSession = {
   onSave: (data: Sessions) => Promise<Response>;
-  onGetAll: () => Promise<Sessions[] | Response>;
-  onGetSingle: (id: number) => Promise<Sessions | Response>;
-  onUpdate: (id: number, data: Partial<Sessions>) => Promise<Sessions | Response>;
+  onGetAll: () => Promise<Response<Sessions[]>>;
+  onGetSingle: (id: number) => Promise<Response<Sessions>>;
+  onUpdate: (id: number, data: Partial<Sessions>) => Promise<Response>;
   onDelete: (id: number) => Promise<Response>;
 };

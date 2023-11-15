@@ -1,7 +1,7 @@
 import { DatabaseConnection } from "./connect";
 
 export default class DataBase {
-  protected db;
+  public db;
 
   constructor() {
     this.db = DatabaseConnection.getConnection();
@@ -12,7 +12,7 @@ export default class DataBase {
     this.initDb();
   }
 
-  private initDb() {
+  protected initDb() {
     const sql: string[] = [
       `create table if not exists users (
         id integer not null primary key auto_increment,
@@ -24,7 +24,7 @@ export default class DataBase {
             nome varchar(100) not null,
             email varchar(100),
             telefone varchar(20),
-            valor decimal(10,2) not null
+            valor varchar(100) not null
         );`,
       `create table if not exists sessions (
           id integer not null primary key auto_increment,
@@ -47,36 +47,18 @@ export default class DataBase {
     );
   }
 
-  private executeTransaction(tx: any, sql: string[]) {
+  public executeTransaction(tx: any, sql: string[], fields?: any[]) {
     for (let i = 0; i < sql.length; i++) {
       console.log(`EXECUTING SQL: ${sql[i]}`);
-      tx.executeSql(sql[i]);
+      tx.executeSql(sql[i], fields);
     }
   }
 
-  private errorTransaction(error: any) {
+  public errorTransaction(error: any) {
     console.log(`erro: ${JSON.stringify(error)}`);
   }
 
-  private finallyTransaction() {
+  public finallyTransaction() {
     console.log("transaction complete call back ");
-  }
-
-  public dropTable() {
-    this.db.transaction((tx) =>
-      tx.executeSql(
-        `drop table sessions;`,
-        [],
-        (_, response) => {
-          console.log("RESPONSE", response);
-          // return resolve(rows["_array"]);
-        },
-
-        (sqlError) => {
-          console.log("ERRRO", sqlError);
-          return false;
-        }
-      )
-    );
   }
 }

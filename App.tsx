@@ -1,24 +1,26 @@
-import DataBase from './src/service';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import DataBase from "./src/service";
+import DrawerNavigator from "./src/navigation/modules/Drawer";
+import "react-native-gesture-handler"
+import BottomTabNavigator from "./src/navigation/modules/Tab";
+import { GlobalContextProvider } from "./src/context/App";
+import { StatusBar } from "expo-status-bar";
+
+import "dayjs/locale/pt-br";
+import dayjs from "dayjs";
+dayjs.locale("pt-br")
 
 new DataBase;
 
-export default function App() {
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>jujubsssssa</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <GlobalContextProvider>
+        <StatusBar style="inverted" />
+        <DrawerNavigator />
+        <BottomTabNavigator />
+      </GlobalContextProvider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

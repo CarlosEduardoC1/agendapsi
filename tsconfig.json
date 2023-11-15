@@ -2,8 +2,9 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "jsx":"react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
   },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "transformer.js", "src/navigation/modules/Tab/config/index.tsz"]
 }

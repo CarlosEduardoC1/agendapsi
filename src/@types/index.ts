@@ -1,6 +1,7 @@
-export type Response = {
+export type Response<T = null> = {
   status: number;
   message: string;
+  data?: T;
 };
 
 export type Pacient = {
@@ -25,10 +26,16 @@ export type Sessions = {
 };
 
 export type Users = {
-    id?: number;
-    imagem?: string;
-    email: string;
-    nome: string;
-}
+  id?: number;
+  imagem?: string;
+  email: string;
+  nome: string;
+};
 
 export type Tables = "pacient" | "users" | "sessions";
+
+export type Tabs = "schedule" | "pacient" | "financy";
+
+export type Mode = "event" | "list";
+
+export type Schedule<T> = T[];

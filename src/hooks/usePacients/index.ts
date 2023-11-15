@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { UsePacient } from "./@types";
-import { Pacient, Response } from "@/@types";
+import { Pacient, Response } from "../../@types";
 import Querys from "../../service/querys";
 
 export const usePacient = (): UsePacient => {
