@@ -40,6 +40,7 @@ export const useComponent = (): UseComponent => {
         //   list: result,
         // }));
       } catch (error) {
+      } finally {
         setState((st) => ({
           ...st,
           loading: false,
@@ -59,6 +60,6 @@ export const useComponent = (): UseComponent => {
     mode,
     changeMode,
     list,
-    loading
+    loading,
   };
 };

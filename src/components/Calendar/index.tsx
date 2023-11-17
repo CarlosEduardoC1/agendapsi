@@ -1,45 +1,53 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, Dimensions } from "react-native";
 import { weekDates, weekDays } from "./config";
 import dayjs from "dayjs";
 import styles from "./styles.module.scss";
 import Timetable from "react-native-calendar-timetable";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 export const Calendar: React.FC = (): React.ReactElement => {
     const { week } = weekDays();
     const weekDatesNumber = weekDates();
     const todayWithMonthAndYear = dayjs().format("D [de] MMMM [de] YYYY");
-    const todayOnlyNumber = dayjs().format("D");
+    const [selectedDay, setSelectedDay] = useState("");
+
+    useEffect(() => {
+        setSelectedDay(dayjs().format("D"))
+    }, []);
 
     return (
-        <View className={styles["container"]}>
-            <View>
-                <Text className={styles["content"]}>{todayWithMonthAndYear}</Text>
-            </View>
+        <View >
+            <View className={styles["container"]} style={{ flex: 1 }}>
+                <View>
+                    <Text className={styles["content"]}>{todayWithMonthAndYear}</Text>
+                </View>
 
-            <View className={styles["days-container"]}>
-                {week.map((day, index) =>
-                    <Text key={`${day}-${index}`}
-                        className={index === 0 || index === week.length - 1
-                            ? styles["weekend"]
-                            : styles[`selectable-days`]}>
-                        {day}
-                    </Text>)}
+                <View className={styles["days-container"]}>
+                    {week.map((day, index) =>
+                        <Text key={`${day}-${index}`}
+                            className={index === 0 || index === week.length - 1
+                                ? styles["weekend"]
+                                : styles[`selectable-days`]}>
+                            {day}
+                        </Text>)}
+                </View>
+                <View className={styles["days-container"]}>
+                    {weekDatesNumber.map((date, index) =>
+                        <Text
+                            onPress={() => setSelectedDay(date)}
+                            key={`${date}-${index}`}
+                            className={index === 0 || index === week.length - 1
+                                ? styles["weekend"]
+                                : date === selectedDay
+                                    ? styles["today"]
+                                    : styles[`selectable-days`]}>{date}</Text>)}
+                </View>
             </View>
-            <View className={styles["days-container"]}>
-                {weekDatesNumber.map((date, index) =>
-                    <Text
-                        style={date === todayOnlyNumber ? { borderRadius: 10 } : null}
-                        key={`${date}-${index}`}
-                        className={index === 0 || index === week.length - 1
-                            ? styles["weekend"]
-                            : date === todayOnlyNumber
-                                ? styles["today"]
-                                : styles[`selectable-days`]}>{date}</Text>)}
-            </View>
-            <ScrollView>
+            <ScrollView style={{ flex: 2, height: Dimensions.get("screen").height / 2 }}
+                alwaysBounceVertical>
                 <Timetable
-                enableSnapping
+                    enableSnapping
                     items={[
                         {
                             title: "Evento",
@@ -62,7 +70,9 @@ export const Calendar: React.FC = (): React.ReactElement => {
                             paddingLeft: 10,
                             elevation: 5
                         }}><Text style={{
-                            color: "white"
+                            color: "white",
+                            opacity: 1,
+                            fontWeight: "bold"
                         }}>
                             {props.item.title}</Text></View>
                     }

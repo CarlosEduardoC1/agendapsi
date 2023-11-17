@@ -9,7 +9,6 @@ export const useSession = (): UseSession => {
   const onSave = useCallback(async (data: Sessions): Promise<Response<any>> => {
     try {
       const id = await query.insertation(data);
-      console.log(id);
       return {
         status: 200,
         message: "Sessão criada com sucesso.",
@@ -26,6 +25,7 @@ export const useSession = (): UseSession => {
   const onGetAll = useCallback(async (): Promise<Response<Sessions[]>> => {
     try {
       const rows = await query.findAll();
+      console.log("RIYTS", rows);
       return { status: 200, message: "", data: rows };
     } catch (error) {
       return {

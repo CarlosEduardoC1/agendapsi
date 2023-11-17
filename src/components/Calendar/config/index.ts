@@ -14,11 +14,12 @@ export function weekDates(): string[] {
     days.push(today.subtract(todayInNumber - i, "day").format("D"));
   }
 
+  const daysToAdd = 7 - days.length;
+
   if (todayInNumber < 6) {
-    for (let i = todayInNumber; i < 6; i++) {
-      days.push(today.add(6 - i, "day").format("D"));
+    for (let i = 1; i <= daysToAdd; i++) {
+      days.push(today.add(i, "day").format("D"));
     }
   }
-
   return days;
 }

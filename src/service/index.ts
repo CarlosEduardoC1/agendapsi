@@ -47,10 +47,10 @@ export default class DataBase {
     );
   }
 
-  public executeTransaction(tx: any, sql: string[], fields?: any[]) {
+  public executeTransaction(tx: any, sql: string[]) {
     for (let i = 0; i < sql.length; i++) {
       console.log(`EXECUTING SQL: ${sql[i]}`);
-      tx.executeSql(sql[i], fields);
+      tx.executeSql(sql[i]);
     }
   }
 
