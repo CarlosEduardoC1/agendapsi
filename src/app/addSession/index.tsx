@@ -29,8 +29,8 @@ export const AddSession: React.FC = (): React.ReactElement => {
                     control={control}
                     name="pacient"
                     render={({ field }) => (
-                        <FormControl>
-                            <FormControl.Label>Paciente*</FormControl.Label>
+                        <FormControl isRequired isInvalid={!!errors.pacient}>
+                            <FormControl.Label>Paciente</FormControl.Label>
                             <Select
                                 color={"gray.600"}
                                 variant="unstyled"
@@ -51,8 +51,8 @@ export const AddSession: React.FC = (): React.ReactElement => {
                     control={control}
                     name="session_value"
                     render={({ field }) => (
-                        <FormControl>
-                            <FormControl.Label>Valor da sessão*</FormControl.Label>
+                        <FormControl isRequired isInvalid={!!errors.session_value}>
+                            <FormControl.Label>Valor da sessão</FormControl.Label>
                             <Input
                                 color={"gray.600"}
                                 variant="unstyled"
@@ -70,8 +70,8 @@ export const AddSession: React.FC = (): React.ReactElement => {
                     control={control}
                     name="date_time"
                     render={({ field }) => (
-                        <FormControl>
-                            <FormControl.Label>Dia e hora da sessão*</FormControl.Label>
+                        <FormControl isRequired isInvalid={!!errors.date_time}>
+                            <FormControl.Label>Dia e hora da sessão</FormControl.Label>
                             <Input
                                 {...field}
                                 value={field.value}
@@ -104,7 +104,8 @@ export const AddSession: React.FC = (): React.ReactElement => {
                     control={control}
                     name="showUp"
                     render={({ field }) => (
-                        <FormControl style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <FormControl
+                            style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <FormControl.Label>Compareceu?</FormControl.Label>
                             <Switch
                                 {...field}
@@ -121,7 +122,8 @@ export const AddSession: React.FC = (): React.ReactElement => {
                     control={control}
                     name="payed"
                     render={({ field }) => (
-                        <FormControl style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <FormControl
+                            style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <FormControl.Label>Pagou?</FormControl.Label>
                             <Switch
                                 {...field}
