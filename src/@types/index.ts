@@ -39,3 +39,10 @@ export type Tabs = "schedule" | "pacient" | "financy";
 export type Mode = "event" | "list";
 
 export type Schedule<T> = T[];
+
+export type Errors<T> = {
+  [k in keyof T]: {
+    required: string;
+    [K: string]: string;
+  };
+};

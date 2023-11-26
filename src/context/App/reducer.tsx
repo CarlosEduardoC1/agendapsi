@@ -3,7 +3,8 @@ import React, { createContext, useContext, useReducer } from "react";
 import { Actions, ActionTypes, GlobalContextProps, GlobalState } from "./models";
 
 export const initialState: GlobalState = {
-  activeTab: "schedule"
+  activeTab: "schedule",
+  onPressActiveTab: () => { }
 };
 
 const Context = createContext({} as GlobalContextProps);
@@ -13,7 +14,13 @@ const reducer = (state: GlobalState, action: Actions): GlobalState => {
     case ActionTypes.ACTIVE_TAB: {
       return { ...state, activeTab: action.payload };
     }
-    
+    case ActionTypes.ACTIVE_TAB_CALLBACK: {
+      return { ...state, onPressActiveTab: action.payload };
+    }
+    case ActionTypes.REMOVE_TAB_CALLBACK: {
+      return { ...state, onPressActiveTab: () => { } };
+    }
+
     default: {
       throw new Error(`Unsupported action type: ${action}`);
     }
