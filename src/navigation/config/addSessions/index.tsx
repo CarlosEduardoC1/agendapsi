@@ -1,7 +1,7 @@
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, Text } from "react-native";
-import { GlobalContext } from "../../context/App";
+import { GlobalContext } from "../../../context/App";
 
 export const ADD_SESSION_OPTIONS = (): DrawerNavigationOptions => {
     const nav = useNavigation();

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { UseComponent } from "./@types";
 import { State } from "../../@types";
 import { INITIAL_STATE } from "../../config";
+import { masks } from "../../../../utils";
 
 export const useComponent = (): UseComponent => {
   const [{ pacients, loading }, setState] = useState<State>(INITIAL_STATE);
@@ -16,109 +17,109 @@ export const useComponent = (): UseComponent => {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
           {
             email: "tst",
             nome: "Carlos",
             telefone: "61995184278",
-            valor: 560,
+            valor: masks.moneyMask(560),
           },
         ],
       }));

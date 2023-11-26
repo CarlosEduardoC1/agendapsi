@@ -8,7 +8,7 @@ export type Pacient = {
   nome: string;
   email: string;
   telefone: string;
-  valor: number;
+  valor: string;
   id?: number;
 };
 
