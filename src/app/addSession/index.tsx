@@ -8,14 +8,19 @@ import { Select, FormControl, NativeBaseProvider, Input, Switch } from "native-b
 import { useComponent } from "./hooks";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import { useState } from "react";
 
 export const AddSession: React.FC = (): React.ReactElement => {
-    const { control, handleSubmit, formState: { errors }, setValue, getValues } = useForm<FormValues>({
-        resolver: yupResolver<any>(schema),
-    });
+    const { control,
+        handleSubmit,
+        formState: { errors },
+        setValue } = useForm<FormValues>({
+            resolver: yupResolver<any>(schema),
+        });
 
-    const { pacient_list, open_date_picker, setDatePicker, parseDate } = useComponent({ handleSubmit });
+    const { pacient_list,
+        open_date_picker,
+        setDatePicker,
+        parseDate } = useComponent({ handleSubmit });
 
     return (
         <View className={styles["container"]}>
