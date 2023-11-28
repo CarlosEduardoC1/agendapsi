@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Schedule } from "../../../app/schedule";
-import { ADD_PACIENT_OPTIONS, SCREEN_OPTIONS } from "../../config";
+import { SCREEN_OPTIONS } from "../../config";
 import { DrawerContent } from "./content";
 import { Pacient } from "../../../app/pacient";
 import { GlobalContext } from "../../../context/App";
@@ -8,7 +8,6 @@ import { ADD_SESSION_OPTIONS } from "../../config";
 import { AddSession } from "../../../app/addSession";
 import { AddPacient } from "../../../app/addPacient";
 import { PacientDetails } from "../../../app/pacientDetails";
-import { PACIENT_DETAILS_OPTIONS } from "../../config/pacientDetails";
 import { Pacient as TPacient } from "../../../@types";
 
 type RootStackParamList = {
@@ -16,7 +15,7 @@ type RootStackParamList = {
   Agenda: any;
   Paciente: any;
   AddSession: { hasPacient: boolean, pacient: string };
-  PacientDetails: any;
+  PacientDetails: { pacient: TPacient };
 }
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
@@ -29,8 +28,8 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Agenda" component={Schedule} />
       <Drawer.Screen name="Paciente" component={Pacient} />
       <Drawer.Screen name="AddSession" component={AddSession} options={ADD_SESSION_OPTIONS} />
-      <Drawer.Screen name="AddPacient" component={AddPacient} options={ADD_PACIENT_OPTIONS} />
-      <Drawer.Screen name="PacientDetails" component={PacientDetails} options={PACIENT_DETAILS_OPTIONS} />
+      <Drawer.Screen name="AddPacient" component={AddPacient} />
+      <Drawer.Screen name="PacientDetails" component={PacientDetails} />
     </Drawer.Navigator>
   );
 }

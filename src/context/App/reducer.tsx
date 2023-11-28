@@ -24,6 +24,9 @@ const reducer = (state: GlobalState, action: Actions): GlobalState => {
     case ActionTypes.EDIT_PACIENT_NAME: {
       return { ...state, editPacientName: action.payload };
     }
+    case ActionTypes.REMOVE_EDIT_PACIENT: {
+      return { ...state, editPacientName: { email: "", nome: "", telefone: "", valor: "" } };
+    }
 
     default: {
       throw new Error(`Unsupported action type: ${action}`);

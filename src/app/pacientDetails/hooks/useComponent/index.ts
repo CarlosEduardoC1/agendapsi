@@ -1,33 +1,33 @@
 import { useEffect } from "react";
-import { GlobalContext } from "../../../../context/App";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Linking } from "react-native";
 import { SupportedModes, UseComponent, Props } from "./@types";
+import { OPTIONS } from "./config";
 
-type ScreenNames = ["AddPacient", "AddSession"];
+type ScreenNames = ["AddPacient", "AddSession", "Paciente"];
 type ScreenNamesRecorded = Record<ScreenNames[number], any>;
 
-export const useComponent = ({ id }: Props): UseComponent => {
-  const { dispatch, ActionTypes, state } = GlobalContext();
-  const { navigate } =
+export const useComponent = ({ pacient }: Props): UseComponent => {
+  const { navigate, setOptions } =
     useNavigation<DrawerNavigationProp<ScreenNamesRecorded>>();
 
   useEffect(() => {
-    dispatch({
-      type: ActionTypes.ACTIVE_TAB_CALLBACK,
-      payload: () =>
-        navigate("AddPacient", {
-          isEditable: true,
-          pacient: state.editPacientName,
-        }),
+    setOptions({
+      ...OPTIONS(
+        () => navigate("Paciente"),
+        () => {
+          navigate("AddPacient", {
+            isEditable: true,
+            pacient,
+          });
+        },
+        pacient.nome
+      ),
     });
-    return () =>
-      dispatch({
-        type: ActionTypes.EDIT_PACIENT_NAME,
-        payload: { email: "", nome: "", telefone: "", valor: "" },
-      });
-  }, []);
+
+    return () => {};
+  }, [pacient]);
 
   function openLinking(mode: SupportedModes, url: string) {
     if (mode === "whatsapp") {
@@ -42,7 +42,7 @@ export const useComponent = ({ id }: Props): UseComponent => {
   }
 
   function newSession() {
-    navigate("AddSession", { hasPacient: true, pacient: String(id) });
+    navigate("AddSession", { hasPacient: true, pacient: String(pacient.id) });
   }
 
   return {

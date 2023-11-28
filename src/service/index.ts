@@ -5,9 +5,6 @@ export default class DataBase {
 
   constructor() {
     this.db = DatabaseConnection.getConnection();
-    this.db.exec([{ sql: "PRAGMA foreign_keys = ON;", args: [] }], false, () =>
-      console.log("Foreign keys turned on")
-    );
 
     this.initDb();
   }

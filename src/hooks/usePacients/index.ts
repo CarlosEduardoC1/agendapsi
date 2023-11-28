@@ -6,15 +6,12 @@ import Querys from "../../service/querys";
 export const usePacient = (): UsePacient => {
   const query = useMemo(() => new Querys("pacient"), []);
 
-  const onSave = useCallback(async (data: Pacient): Promise<Response> => {
+  const onSave = useCallback(async (data: Pacient): Promise<string> => {
     try {
       const id = await query.insertation(data);
-      return {
-        status: 200,
-        message: "Paciente cadastrado com sucesso." + " " + id,
-      };
+      return "Paciente cadastrado com sucesso.";
     } catch (error) {
-      return { status: 400, message: "Erro ao tentar cadastrar paciente" };
+      throw new Error("Erro ao tentar cadastrar paciente");
     }
   }, []);
 

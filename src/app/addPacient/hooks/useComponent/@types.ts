@@ -3,6 +3,7 @@ import { Pacient } from "../../../../@types";
 export interface Props {
   handleSubmit: any;
   isEditable: boolean;
+  pacient: Pacient;
 }
 
 export type State = {

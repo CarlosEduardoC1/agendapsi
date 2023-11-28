@@ -1,5 +1,7 @@
+import { Pacient } from "../../../../@types";
+
 export interface Props {
-    id?: string;
+  pacient: Pacient
 }
 
 export type SupportedModes = "tel" | "mailto" | "whatsapp";

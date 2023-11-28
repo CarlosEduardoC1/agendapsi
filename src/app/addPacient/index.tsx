@@ -4,13 +4,14 @@ import { Controller, useForm } from "react-hook-form";
 import { Pacient } from "../../@types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
-import { Button, FormControl, Input, NativeBaseProvider } from "native-base";
+import { Button, FormControl, Input, NativeBaseProvider, } from "native-base";
 import { masks } from "../../utils";
 import { useComponent } from "./hooks";
 import { Alert } from "../../components/Alert";
 import { ALERT_DELETE_ITEM } from "./config";
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useEffect } from "react";
 
 type RootStackParamList = {
     AddPacient: { isEditable: boolean, pacient: Pacient };
@@ -21,13 +22,18 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AddPacient'>;
 export const AddPacient: React.FC<Props> = ({ route }): React.ReactElement => {
     const { control,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        reset
     } = useForm<Pacient>({
         resolver: yupResolver<any>(schema),
-        defaultValues: route.params ? { ...route?.params?.pacient, telefone: masks.phoneMask(route?.params?.pacient.telefone) } : {}
     });
 
-    const { alert, setAlert, dropPacient } = useComponent({ handleSubmit, isEditable: route?.params?.isEditable });
+    const { alert, setAlert, dropPacient } = useComponent({
+        handleSubmit, isEditable: route?.params?.isEditable,
+        pacient: route?.params?.pacient
+    });
+
+    useEffect(() => { reset({ ...route.params.pacient }) }, [route.params.pacient])
 
     return (
         <View className={styles["container"]}>

@@ -1,7 +1,7 @@
 import { Pacient, Response } from "../../@types";
 
 export type UsePacient = {
-  onSave: (data: Pacient) => Promise<Response>;
+  onSave: (data: Pacient) => Promise<string>;
   onGetAll: () => Promise<Pacient[]>;
   onGetSingle: (id: number) => Promise<Pacient | Response>;
   onUpdate: (id: number, data: Partial<Pacient>) => Promise<Pacient | Response>;

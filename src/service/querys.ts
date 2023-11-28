@@ -41,7 +41,7 @@ export default class Querys extends DataBase {
     return new Promise((resolve, reject) => {
       this.db.transaction((tx) =>
         tx.executeSql(
-          `select * from ${this.table};`,
+          `select * from ${this.table} order by id desc;`,
           [],
           (_, { rows }) => {
             return resolve(rows["_array"] as T);

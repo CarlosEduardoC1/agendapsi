@@ -12,6 +12,7 @@ export enum ActionTypes {
   ACTIVE_TAB_CALLBACK = "ACTIVE_TAB_CALLBACK",
   REMOVE_TAB_CALLBACK = "REMOVE_TAB_CALLBACK",
   EDIT_PACIENT_NAME = "EDIT_PACIENT_NAME",
+  REMOVE_EDIT_PACIENT = "REMOVE_EDIT_PACIENT",
 }
 
 export type Actions =
@@ -29,6 +30,9 @@ export type Actions =
   | {
       type: ActionTypes.EDIT_PACIENT_NAME;
       payload: Pacient;
+    }
+  | {
+      type: ActionTypes.REMOVE_EDIT_PACIENT;
     };
 
 export interface GlobalState {
