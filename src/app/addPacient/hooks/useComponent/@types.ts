@@ -1,9 +1,16 @@
-import { Pacient } from "../../../../@types"
+import { Pacient } from "../../../../@types";
 
 export interface Props {
-    handleSubmit: any;
+  handleSubmit: any;
+  isEditable: boolean;
 }
 
-export type UseComponent = {
-    createPacient: (data: Pacient) => void;
-}
+export type State = {
+  alert: boolean;
+};
+
+export type UseComponent = State & {
+  createPacient: (data: Pacient) => void;
+  setAlert: (mode: "show" | "hide") => void;
+  dropPacient: (id: string | number) => void;
+};

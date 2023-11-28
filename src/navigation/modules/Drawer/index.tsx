@@ -7,8 +7,19 @@ import { GlobalContext } from "../../../context/App";
 import { ADD_SESSION_OPTIONS } from "../../config";
 import { AddSession } from "../../../app/addSession";
 import { AddPacient } from "../../../app/addPacient";
+import { PacientDetails } from "../../../app/pacientDetails";
+import { PACIENT_DETAILS_OPTIONS } from "../../config/pacientDetails";
+import { Pacient as TPacient } from "../../../@types";
 
-const Drawer = createDrawerNavigator();
+type RootStackParamList = {
+  AddPacient: { isEditable: boolean, pacient: TPacient };
+  Agenda: any;
+  Paciente: any;
+  AddSession: { hasPacient: boolean, pacient: string };
+  PacientDetails: any;
+}
+
+const Drawer = createDrawerNavigator<RootStackParamList>();
 
 const DrawerNavigator = () => {
   const { state } = GlobalContext();
@@ -19,6 +30,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Paciente" component={Pacient} />
       <Drawer.Screen name="AddSession" component={AddSession} options={ADD_SESSION_OPTIONS} />
       <Drawer.Screen name="AddPacient" component={AddPacient} options={ADD_PACIENT_OPTIONS} />
+      <Drawer.Screen name="PacientDetails" component={PacientDetails} options={PACIENT_DETAILS_OPTIONS} />
     </Drawer.Navigator>
   );
 }

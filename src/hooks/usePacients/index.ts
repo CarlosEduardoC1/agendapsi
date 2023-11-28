@@ -18,23 +18,20 @@ export const usePacient = (): UsePacient => {
     }
   }, []);
 
-  const onGetAll = useCallback(async (): Promise<Pacient[] | Response> => {
+  const onGetAll = useCallback(async (): Promise<Pacient[]> => {
     try {
-      const rows = await query.findAll();
+      const rows = await query.findAll<Pacient[]>();
       return rows;
     } catch (error) {
-      return {
-        status: 400,
-        message: "Nenhum paciente encontrado",
-      };
+      throw new Error("Nenhum paciente encontrado");
     }
   }, []);
 
   const onGetSingle = useCallback(
     async (id: number): Promise<Pacient | Response> => {
       try {
-        const single = await query.findOne(id);
-        return single[0];
+        const single = await query.findOne<Pacient>(id);
+        return single;
       } catch (error) {
         return {
           status: 400,

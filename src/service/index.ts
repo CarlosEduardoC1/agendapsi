@@ -15,19 +15,19 @@ export default class DataBase {
   protected initDb() {
     const sql: string[] = [
       `create table if not exists users (
-        id integer not null primary key auto_increment,
+        id integer not null primary key autoincrement,
         imagem longtext,
         email varchar(100)
         );`,
       `create table if not exists pacient (
-            id integer not null primary key auto_increment, 
+            id integer not null primary key autoincrement, 
             nome varchar(100) not null,
             email varchar(100),
             telefone varchar(20),
             valor varchar(100) not null
         );`,
       `create table if not exists sessions (
-          id integer not null primary key auto_increment,
+          id integer not null primary key autoincrement,
           id_paciente integer,
           schedule_date datetime not null,
           payed boolean not null,
@@ -55,10 +55,10 @@ export default class DataBase {
   }
 
   public errorTransaction(error: any) {
-    console.log(`erro: ${JSON.stringify(error)}`);
+    console.log(`ERROR TRANSACTION: ${JSON.stringify(error)}`);
   }
 
   public finallyTransaction() {
-    console.log("transaction complete call back ");
+    console.log("transaction complete callback ");
   }
 }

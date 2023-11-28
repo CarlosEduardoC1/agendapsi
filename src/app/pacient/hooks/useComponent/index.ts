@@ -2,128 +2,22 @@ import { useCallback, useEffect, useState } from "react";
 import { UseComponent } from "./@types";
 import { State } from "../../@types";
 import { INITIAL_STATE } from "../../config";
-import { masks } from "../../../../utils";
+import { usePacient } from "../../../../hooks";
 
 export const useComponent = (): UseComponent => {
   const [{ pacients, loading }, setState] = useState<State>(INITIAL_STATE);
+  const { onGetAll } = usePacient();
 
   const getPacients = useCallback(async (): Promise<void> => {
     try {
       setLoading("show");
+      const response = await onGetAll();
       setState((state) => ({
         ...state,
-        pacients: [
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-          {
-            email: "tst",
-            nome: "Carlos",
-            telefone: "61995184278",
-            valor: masks.moneyMask(560),
-          },
-        ],
+        pacients: response,
       }));
     } catch (error) {
+      
     } finally {
       setLoading("hide");
     }

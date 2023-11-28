@@ -4,7 +4,8 @@ import { Actions, ActionTypes, GlobalContextProps, GlobalState } from "./models"
 
 export const initialState: GlobalState = {
   activeTab: "schedule",
-  onPressActiveTab: () => { }
+  onPressActiveTab: () => { },
+  editPacientName: { email: "", nome: "", telefone: "", valor: "" }
 };
 
 const Context = createContext({} as GlobalContextProps);
@@ -19,6 +20,9 @@ const reducer = (state: GlobalState, action: Actions): GlobalState => {
     }
     case ActionTypes.REMOVE_TAB_CALLBACK: {
       return { ...state, onPressActiveTab: () => { } };
+    }
+    case ActionTypes.EDIT_PACIENT_NAME: {
+      return { ...state, editPacientName: action.payload };
     }
 
     default: {

@@ -10,7 +10,7 @@ import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
 dayjs.locale("pt-br")
 
-new DataBase;
+new DataBase();
 
 const App = () => {
   return (

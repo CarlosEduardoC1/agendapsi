@@ -1,5 +1,6 @@
-import { Pacient } from "../../../../@types"
+import { Pacient } from "../../../../@types";
 
 export type UseFetch = {
-    onSubmit: (data: Pacient) => Promise<any>;
-}
+  onSubmit: (data: Pacient) => Promise<any>;
+  onRemove: (id: string | number) => Promise<any>;
+};

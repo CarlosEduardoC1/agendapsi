@@ -24,8 +24,7 @@ export const useSession = (): UseSession => {
 
   const onGetAll = useCallback(async (): Promise<Response<Sessions[]>> => {
     try {
-      const rows = await query.findAll();
-      console.log("RIYTS", rows);
+      const rows = await query.findAll<Sessions[]>();
       return { status: 200, message: "", data: rows };
     } catch (error) {
       return {
@@ -38,11 +37,11 @@ export const useSession = (): UseSession => {
   const onGetSingle = useCallback(
     async (id: number): Promise<Response<Sessions>> => {
       try {
-        const single = await query.findOne(id);
+        const single = await query.findOne<Sessions>(id);
         return {
           status: 200,
           message: "",
-          data: single[0],
+          data: single,
         };
       } catch (error) {
         return {

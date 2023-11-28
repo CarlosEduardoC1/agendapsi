@@ -4,23 +4,41 @@ import { Controller, useForm } from "react-hook-form";
 import { Pacient } from "../../@types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
-import { FormControl, Input, NativeBaseProvider } from "native-base";
+import { Button, FormControl, Input, NativeBaseProvider } from "native-base";
 import { masks } from "../../utils";
 import { useComponent } from "./hooks";
+import { Alert } from "../../components/Alert";
+import { ALERT_DELETE_ITEM } from "./config";
 
-export const AddPacient: React.FC = (): React.ReactElement => {
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+    AddPacient: { isEditable: boolean, pacient: Pacient };
+};
+
+type Props = NativeStackScreenProps<RootStackParamList, 'AddPacient'>;
+
+export const AddPacient: React.FC<Props> = ({ route }): React.ReactElement => {
     const { control,
         handleSubmit,
         formState: { errors }
     } = useForm<Pacient>({
         resolver: yupResolver<any>(schema),
+        defaultValues: route.params ? { ...route?.params?.pacient, telefone: masks.phoneMask(route?.params?.pacient.telefone) } : {}
     });
 
-    useComponent({ handleSubmit });
+    const { alert, setAlert, dropPacient } = useComponent({ handleSubmit, isEditable: route?.params?.isEditable });
 
     return (
         <View className={styles["container"]}>
             <NativeBaseProvider>
+                <Alert
+                    isOpen={alert}
+                    {...ALERT_DELETE_ITEM}
+                    cancelRef={null}
+                    onClose={() => setAlert("hide")}
+                    onConfirm={() => dropPacient(String(route?.params?.pacient.id))}
+                />
                 <Controller
                     control={control}
                     name="nome"
@@ -87,7 +105,7 @@ export const AddPacient: React.FC = (): React.ReactElement => {
                     )}
                 />
                 <View style={{ margin: 10 }} />
-                <Controller
+                {!route?.params?.isEditable && <Controller
                     control={control}
                     name="valor"
                     render={({ field }) => (
@@ -108,8 +126,14 @@ export const AddPacient: React.FC = (): React.ReactElement => {
                             >{errors.valor?.message}</FormControl.ErrorMessage>}
                         </FormControl>
                     )}
-                />
+                />}
                 <View style={{ margin: 10 }} />
+                {route?.params?.isEditable && <Button
+                    variant="ghost"
+                    onPress={() => setAlert("show")}
+                    _text={{ color: "red.400" }}
+                >
+                    Deletar item</Button>}
             </NativeBaseProvider>
         </View>
     );

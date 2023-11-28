@@ -8,7 +8,12 @@ export const useFetch = (): UseFetch => {
     return Promise.resolve(true);
   }, []);
 
+  const onRemove = useCallback(async (id: string | number): Promise<any> => {
+    return Promise.resolve(true);
+  }, []);
+
   return {
     onSubmit,
+    onRemove
   };
 };

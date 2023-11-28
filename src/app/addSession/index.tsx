@@ -9,12 +9,24 @@ import { useComponent } from "./hooks";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from '@expo/vector-icons';
 
-export const AddSession: React.FC = (): React.ReactElement => {
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+    AddSession: { hasPacient: boolean, pacient: string };
+};
+
+type Props = NativeStackScreenProps<RootStackParamList, 'AddSession'>;
+
+export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
+    
     const { control,
         handleSubmit,
         formState: { errors },
         setValue } = useForm<FormValues>({
             resolver: yupResolver<any>(schema),
+            defaultValues: {
+                pacient: Number(route?.params?.pacient)
+            }
         });
 
     const { pacient_list,
@@ -25,7 +37,7 @@ export const AddSession: React.FC = (): React.ReactElement => {
     return (
         <View className={styles["container"]}>
             <NativeBaseProvider>
-                <Controller
+                {!route?.params?.hasPacient && <Controller
                     control={control}
                     name="pacient"
                     render={({ field }) => (
@@ -45,7 +57,7 @@ export const AddSession: React.FC = (): React.ReactElement => {
                             <FormControl.ErrorMessage>{errors.pacient?.message}</FormControl.ErrorMessage>
                         </FormControl>
                     )}
-                />
+                />}
                 <View style={{ margin: 10 }} />
                 <Controller
                     control={control}
