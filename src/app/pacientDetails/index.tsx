@@ -6,6 +6,7 @@ import { Button, Divider, NativeBaseProvider } from "native-base";
 import { masks } from "../../utils";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pacient } from "../../@types";
+import { Entypo } from '@expo/vector-icons';
 
 type RootStackParamList = {
     PacientDetails: { pacient: Pacient };
@@ -14,7 +15,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'PacientDetails'>;
 
 export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement => {
-    const { openLinking, newSession } = useComponent({ pacient: route.params.pacient });
+    const { openLinking, newSession, oppenedValues, sessionsQuantity } = useComponent({ pacient: route.params.pacient });
 
     return (
         <View className={styles["container"]}>
@@ -38,10 +39,12 @@ export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement =
                 </Pressable>
 
                 <View style={{ margin: 10 }} />
-                <View>
+                {oppenedValues && <View style={{ display: "flex", flexDirection: "column" }}>
                     <Text style={{ color: "#999999" }}>Valores em aberto</Text>
-                    <Text> </Text>
-                </View>
+                    <Text style={{ color: "white" }}>R$ {masks.moneyMask(oppenedValues)}</Text>
+                </View>}
+                <View style={{ margin: 10 }} />
+
                 <View style={{ display: "flex", marginRight: 10 }}>
                     <Button size="lg" variant="outline" colorScheme="secondary"
                         borderColor={"pink.800"}
@@ -52,6 +55,18 @@ export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement =
                 </View>
                 <View style={{ margin: 10 }} />
                 <Divider bg="gray.800" width={"97%"} />
+                <View style={{ margin: 10 }} />
+
+                {sessionsQuantity &&
+                    <Pressable style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <View style={{ display: "flex", flexDirection: "column" }}>
+                            <Text style={{ color: "#999999" }}>Relatório de pagamento</Text>
+                            <Text style={{ color: "white" }}>{sessionsQuantity} itens</Text>
+                        </View>
+                        <Entypo name="chevron-small-right" size={24} color="#999" />
+                    </Pressable>}
+                <View style={{ margin: 10 }} />
+
                 <Button size="lg" colorScheme="secondary"
                     borderColor={"pink.800"}
                     borderRadius={10}

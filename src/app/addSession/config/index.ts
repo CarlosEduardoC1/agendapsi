@@ -11,4 +11,7 @@ export const FORM_ERRORS: Errors<FormValues> = {
   session_value: {
     required: "Você precisa informar o valor da sessão",
   },
+  date: {
+    required: "",
+  },
 };

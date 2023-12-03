@@ -24,7 +24,7 @@ export const Schedule: React.FC = (): React.ReactElement => {
 
             />
             <ScrollView>
-                {mode === "event" ? (
+                {mode === "list" ? (
                     <>
                         {list.map((item, index) => <List key={`${item.content}-${index}`} {...item} />)}
                     </>

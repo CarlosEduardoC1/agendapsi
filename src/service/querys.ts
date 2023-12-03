@@ -19,20 +19,25 @@ export default class Querys extends DataBase {
     }
 
     return new Promise((resolve, reject) => {
-      this.db.transaction((tx) =>
-        tx.executeSql(
-          `insert into ${this.table} (${fields.toString()})
+      this.db.transaction(
+        (tx) =>
+          tx.executeSql(
+            `insert into ${this.table} (${fields.toString()})
         values (${interrogations.toString()});`,
-          fields.map((item) => (values as any)[item]),
-          (tr, result) => {
-            return resolve({ id: result.insertId });
-          },
-          (sqlError) => {
-            console.log("ERROR ON INSERT", JSON.stringify(sqlError));
-            reject({ id: 0 });
-            return false;
-          }
-        )
+            fields.map((item) => (values as any)[item]),
+            (tr, result) => {
+              return resolve({ id: result.insertId });
+            },
+            (sqlError, opError) => {
+              console.log("ERROR FIELDS", opError);
+              console.log("ERROR ON INSERT", JSON.stringify(sqlError));
+              reject({ id: 0 });
+              return false;
+            }
+          ),
+        (error) => {
+          console.log(error);
+        }
       );
     });
   }
@@ -119,6 +124,52 @@ export default class Querys extends DataBase {
             return false;
           }
         )
+      );
+    });
+  }
+
+  public getPacientWithOppenedValues(id: any) {
+    return new Promise((resolve, reject) => {
+      this.db.transaction(
+        (tx) =>
+          tx.executeSql(
+            `select sum(sessionValue) as soma from sessions where id_paciente = ${id} and payed = false group by id_paciente;`,
+            [],
+            (_, response) => {
+              resolve(response.rows._array);
+            },
+
+            (sqlError) => {
+              reject(sqlError);
+              return false;
+            }
+          ),
+        (error) => {
+          console.log("GET VALUES ERROR", error);
+        }
+      );
+    });
+  }
+
+  public pacientSessionsQuantity(id: any) {
+    return new Promise((resolve, reject) => {
+      this.db.transaction(
+        (tx) =>
+          tx.executeSql(
+            `select count(*) as quantidade from sessions where id_paciente = ${id} group by id_paciente;`,
+            [],
+            (_, response) => {
+              resolve(response.rows._array);
+            },
+
+            (sqlError) => {
+              reject(sqlError);
+              return false;
+            }
+          ),
+        (error) => {
+          console.log("GET VALUES ERROR", error);
+        }
       );
     });
   }

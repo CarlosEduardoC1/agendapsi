@@ -1,5 +1,6 @@
-import { FormValues } from "../../@types"
+import { Pacient, Sessions } from "../../../../@types";
 
 export type UseFetch = {
-    onSubmit: (data: FormValues) => Promise<any>;
+    onSubmit: (data: Sessions) => Promise<any>;
+    getPacients: () => Promise<Pacient[]>;
 }

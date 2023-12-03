@@ -4,7 +4,6 @@ import { SCREEN_OPTIONS } from "../../config";
 import { DrawerContent } from "./content";
 import { Pacient } from "../../../app/pacient";
 import { GlobalContext } from "../../../context/App";
-import { ADD_SESSION_OPTIONS } from "../../config";
 import { AddSession } from "../../../app/addSession";
 import { AddPacient } from "../../../app/addPacient";
 import { PacientDetails } from "../../../app/pacientDetails";
@@ -27,7 +26,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator screenOptions={SCREEN_OPTIONS(state.activeTab)} drawerContent={DrawerContent}>
       <Drawer.Screen name="Agenda" component={Schedule} />
       <Drawer.Screen name="Paciente" component={Pacient} />
-      <Drawer.Screen name="AddSession" component={AddSession} options={ADD_SESSION_OPTIONS} />
+      <Drawer.Screen name="AddSession" component={AddSession} />
       <Drawer.Screen name="AddPacient" component={AddPacient} />
       <Drawer.Screen name="PacientDetails" component={PacientDetails} />
     </Drawer.Navigator>

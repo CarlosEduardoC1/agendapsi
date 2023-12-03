@@ -26,7 +26,7 @@ export default class DataBase {
       `create table if not exists sessions (
           id integer not null primary key autoincrement,
           id_paciente integer,
-          schedule_date datetime not null,
+          schedule_date varchar(20) not null,
           payed boolean not null,
           executed boolean not null,
           sessionValue decimal(10,2) not null,

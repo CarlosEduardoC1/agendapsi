@@ -33,7 +33,7 @@ export const AddPacient: React.FC<Props> = ({ route }): React.ReactElement => {
         pacient: route?.params?.pacient
     });
 
-    useEffect(() => { reset({ ...route.params.pacient }) }, [route.params.pacient])
+    useEffect(() => { if (route.params) reset({ ...route.params.pacient }) }, [route.params])
 
     return (
         <View className={styles["container"]}>

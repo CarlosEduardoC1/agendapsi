@@ -4,12 +4,17 @@ import { INITIAL_STATE } from "../../config";
 import { Mode } from "../../../../@types";
 import { usePacient, useSession } from "../../../../hooks";
 import { Props as List } from "../../../../components/List/@types";
+import { useIsFocused } from "@react-navigation/native";
+
+import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
+dayjs.locale("pt-br")
 
 export const useComponent = (): UseComponent => {
   const [{ mode, list, loading }, setState] = useState<State>(INITIAL_STATE);
   const { onGetAll } = useSession();
   const { onGetSingle } = usePacient();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     (async () => {
@@ -20,26 +25,36 @@ export const useComponent = (): UseComponent => {
         }));
 
         const result: List[] = [];
-        const { data } = await onGetAll();
-        if (data) {
-          for (let i = 0; i < data?.length; i++) {
-            const pacient = await onGetSingle(data[i].id_paciente);
+        const response = await onGetAll();
+        if (response) {
+          for (let i = 0; i < response?.length; i++) {
+            const pacient = await onGetSingle(response[i].id_paciente);
+            console.log(dayjs(response[i].schedule_date).format(
+              mode === "list" ? "LLLL" : "YYYY-MM-DD HH:mm:ss"
+            ));
+            dayjs(response[i].schedule_date).format(
+              mode === "list" ? "LLLL" : "YYYY-MM-DD HH:mm:ss"
+            );
             if (pacient.nome) {
               result.push({
-                date: dayjs(data[i].schedule_date).format(
-                  mode === "list" ? "LLLL" : "YYYY-MM-DD HH:mm:ss"
-                ),
-                content: [],
+                date: String(response[i].schedule_date),
+                content: [
+                  {
+                    pacientName: pacient.nome,
+                    sessionHour: String(response[i].schedule_date),
+                  },
+                ],
               });
             }
           }
         }
         console.log(result);
-        // setState((st) => ({
-        //   ...st,
-        //   list: result,
-        // }));
+        setState((state) => ({
+          ...state,
+          list: result,
+        }));
       } catch (error) {
+        console.log(error);
       } finally {
         setState((st) => ({
           ...st,
@@ -47,7 +62,7 @@ export const useComponent = (): UseComponent => {
         }));
       }
     })();
-  }, [mode]);
+  }, [mode, isFocused]);
 
   function changeMode(mode: Mode) {
     setState((state) => ({

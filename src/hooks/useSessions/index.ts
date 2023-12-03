@@ -6,31 +6,21 @@ import Querys from "../../service/querys";
 export const useSession = (): UseSession => {
   const query = useMemo(() => new Querys("sessions"), []);
 
-  const onSave = useCallback(async (data: Sessions): Promise<Response<any>> => {
+  const onSave = useCallback(async (data: Sessions): Promise<any> => {
     try {
       const id = await query.insertation(data);
-      return {
-        status: 200,
-        message: "Sessão criada com sucesso.",
-        data: id,
-      };
+      return id;
     } catch (error) {
-      return {
-        status: 400,
-        message: "Erro ao tentar criar sessão"
-      };
+      throw new Error("Nenhuma sessão encontrada");
     }
   }, []);
 
-  const onGetAll = useCallback(async (): Promise<Response<Sessions[]>> => {
+  const onGetAll = useCallback(async (): Promise<Sessions[]> => {
     try {
       const rows = await query.findAll<Sessions[]>();
-      return { status: 200, message: "", data: rows };
+      return rows;
     } catch (error) {
-      return {
-        status: 400,
-        message: "Nenhuma sessão encontrada"
-      };
+      throw new Error("Nenhuma sessão encontrada");
     }
   }, []);
 

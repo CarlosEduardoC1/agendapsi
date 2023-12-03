@@ -24,20 +24,14 @@ export const usePacient = (): UsePacient => {
     }
   }, []);
 
-  const onGetSingle = useCallback(
-    async (id: number): Promise<Pacient | Response> => {
-      try {
-        const single = await query.findOne<Pacient>(id);
-        return single;
-      } catch (error) {
-        return {
-          status: 400,
-          message: "Não foi possível encontrar o paciente.",
-        };
-      }
-    },
-    []
-  );
+  const onGetSingle = useCallback(async (id: number): Promise<Pacient> => {
+    try {
+      const single = await query.findOne<Pacient[]>(id);
+      return single[0];
+    } catch (error) {
+      throw new Error("Nenhum paciente encontrado");
+    }
+  }, []);
 
   const onUpdate = useCallback(
     async (id: number, data: Partial<Pacient>): Promise<Response> => {
@@ -72,5 +66,23 @@ export const usePacient = (): UsePacient => {
     }
   }, []);
 
-  return { onSave, onGetAll, onGetSingle, onUpdate, onDelete };
+  const onGetValues = useCallback(async (id: any) => {
+    try {
+      const values = await query.getPacientWithOppenedValues(id);
+      return values;
+    } catch (error) {
+      throw new Error("Não encontrado");
+    }
+  }, []);
+
+  const onGetSessionsQuantity = useCallback(async (id: any) => {
+    try {
+      const values = await query.pacientSessionsQuantity(id);
+      return values;
+    } catch (error) {
+      throw new Error("Não encontrado");
+    }
+  }, []);
+
+  return { onSave, onGetAll, onGetSingle, onUpdate, onDelete, onGetValues, onGetSessionsQuantity };
 };

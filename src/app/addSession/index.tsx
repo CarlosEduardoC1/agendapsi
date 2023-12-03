@@ -153,7 +153,10 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
                     isVisible={open_date_picker}
                     mode="datetime"
                     style={{ backgroundColor: "#272A30" }}
-                    onConfirm={(props) => setValue("date_time", parseDate(props))}
+                    onConfirm={(props) => {
+                        setValue("date", props);
+                        setValue("date_time", parseDate(props))
+                    }}
                     onCancel={() => setDatePicker("close")}
                 />
             </SafeAreaView>

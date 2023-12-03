@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Linking } from "react-native";
 import { SupportedModes, UseComponent, Props } from "./@types";
 import { OPTIONS } from "./config";
+import { GlobalContext } from "../../../../context/App";
+import { usePacient } from "../../../../hooks";
 
 type ScreenNames = ["AddPacient", "AddSession", "Paciente"];
 type ScreenNamesRecorded = Record<ScreenNames[number], any>;
@@ -11,11 +13,39 @@ type ScreenNamesRecorded = Record<ScreenNames[number], any>;
 export const useComponent = ({ pacient }: Props): UseComponent => {
   const { navigate, setOptions } =
     useNavigation<DrawerNavigationProp<ScreenNamesRecorded>>();
+  const { ActionTypes, dispatch } = GlobalContext();
+  const { onGetValues, onGetSessionsQuantity } = usePacient();
+  const [oppenedValues, setOppenedValues] = useState();
+  const [sessionsQuantity, setSessionsQuantity] = useState<number>();
+
+  const getOppenedValues = useCallback(async () => {
+    const values = await onGetValues(pacient.id);
+    if (values.length > 0) {
+      setOppenedValues(values[0].soma);
+    } else {
+      setOppenedValues(undefined);
+    }
+  }, [pacient.id]);
+
+  const getSessionsQuantity = useCallback(async () => {
+    const values = await onGetSessionsQuantity(pacient.id);
+    if (values.length > 0) {
+      setSessionsQuantity(values[0].quantidade);
+    } else {
+      setSessionsQuantity(undefined);
+    }
+  }, [pacient.id]);
 
   useEffect(() => {
     setOptions({
       ...OPTIONS(
-        () => navigate("Paciente"),
+        () => {
+          navigate("Paciente");
+          dispatch({
+            type: ActionTypes.ACTIVE_TAB,
+            payload: "pacient",
+          });
+        },
         () => {
           navigate("AddPacient", {
             isEditable: true,
@@ -25,8 +55,8 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
         pacient.nome
       ),
     });
-
-    return () => {};
+    getOppenedValues();
+    getSessionsQuantity();
   }, [pacient]);
 
   function openLinking(mode: SupportedModes, url: string) {
@@ -48,5 +78,7 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
   return {
     openLinking,
     newSession,
+    oppenedValues,
+    sessionsQuantity
   };
 };
