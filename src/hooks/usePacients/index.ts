@@ -8,7 +8,7 @@ export const usePacient = (): UsePacient => {
 
   const onSave = useCallback(async (data: Pacient): Promise<string> => {
     try {
-      const id = await query.insertation(data);
+      await query.insertation(data);
       return "Paciente cadastrado com sucesso.";
     } catch (error) {
       throw new Error("Erro ao tentar cadastrar paciente");
@@ -84,5 +84,13 @@ export const usePacient = (): UsePacient => {
     }
   }, []);
 
-  return { onSave, onGetAll, onGetSingle, onUpdate, onDelete, onGetValues, onGetSessionsQuantity };
+  return {
+    onSave,
+    onGetAll,
+    onGetSingle,
+    onUpdate,
+    onDelete,
+    onGetValues,
+    onGetSessionsQuantity,
+  };
 };

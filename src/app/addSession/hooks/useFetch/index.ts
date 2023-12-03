@@ -8,9 +8,11 @@ export const useFetch = (): UseFetch => {
   const { onSave } = useSession();
 
   const onSubmit = useCallback(async (data: Sessions): Promise<any> => {
-    console.log("SUBMIT");
+    const formData = { ...data };
+    formData.sessionValue = formData.sessionValue
+      .replaceAll(".", "")
+      .replace(",", ".");
     const response = await onSave(data);
-    console.log(response);
     return response;
   }, []);
 

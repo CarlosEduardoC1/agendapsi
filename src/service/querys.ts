@@ -173,4 +173,22 @@ export default class Querys extends DataBase {
       );
     });
   }
+
+  public getSessionByPacient<T>(id: string): Promise<T[]> {
+    return new Promise((resolve, reject) => {
+      this.db.transaction((tx) =>
+        tx.executeSql(
+          `select * from sessions where id_paciente = ${id}`,
+          [],
+          (_, response) => {
+            resolve(response.rows._array);
+          },
+          (sqlError) => {
+            reject(sqlError);
+            return false;
+          }
+        )
+      );
+    });
+  }
 }

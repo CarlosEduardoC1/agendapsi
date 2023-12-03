@@ -11,4 +11,5 @@ export type UseComponent = {
   newSession: () => void;
   oppenedValues: any
   sessionsQuantity: any
+  navigateToReport: () => void;
 };

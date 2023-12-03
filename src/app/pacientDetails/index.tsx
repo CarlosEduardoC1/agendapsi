@@ -15,7 +15,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'PacientDetails'>;
 
 export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement => {
-    const { openLinking, newSession, oppenedValues, sessionsQuantity } = useComponent({ pacient: route.params.pacient });
+    const { openLinking, newSession, oppenedValues, sessionsQuantity, navigateToReport } = useComponent({ pacient: route.params.pacient });
 
     return (
         <View className={styles["container"]}>
@@ -58,13 +58,15 @@ export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement =
                 <View style={{ margin: 10 }} />
 
                 {sessionsQuantity &&
-                    <Pressable style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                    <Pressable onPress={navigateToReport}
+                        style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ display: "flex", flexDirection: "column" }}>
                             <Text style={{ color: "#999999" }}>Relatório de pagamento</Text>
                             <Text style={{ color: "white" }}>{sessionsQuantity} itens</Text>
                         </View>
                         <Entypo name="chevron-small-right" size={24} color="#999" />
-                    </Pressable>}
+                    </Pressable>
+                }
                 <View style={{ margin: 10 }} />
 
                 <Button size="lg" colorScheme="secondary"
@@ -80,4 +82,3 @@ export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement =
         </View>
     )
 }
-{/** ADICIONAR QUERY PARA BUSCAR VALORES ABERTOS */ }

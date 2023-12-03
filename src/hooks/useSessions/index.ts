@@ -76,5 +76,14 @@ export const useSession = (): UseSession => {
     }
   }, []);
 
-  return { onSave, onGetAll, onGetSingle, onUpdate, onDelete };
+  const onGetByPacient = useCallback(async (id: string): Promise<Sessions[]> => {
+    try {
+      const response = await query.getSessionByPacient<Sessions>(id);
+      return response;
+    } catch (error) {
+      throw new Error("Nenhum dado encontrado");
+    }
+  }, []);
+
+  return { onSave, onGetAll, onGetSingle, onUpdate, onDelete, onGetByPacient };
 };

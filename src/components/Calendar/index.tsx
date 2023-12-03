@@ -5,16 +5,32 @@ import styles from "./styles.module.scss";
 import Timetable from "react-native-calendar-timetable";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { Props } from "./@types";
 
-export const Calendar: React.FC = (): React.ReactElement => {
+export const Calendar: React.FC<Props> = ({ list, titleParam, startDateParam }): React.ReactElement => {
     const { week } = weekDays();
     const weekDatesNumber = weekDates();
     const todayWithMonthAndYear = dayjs().format("D [de] MMMM [de] YYYY");
     const [selectedDay, setSelectedDay] = useState("");
+    const [renderedItems, setRenderedItems] = useState<any[]>([]);
+
+    function verifyTitleParam(payed: boolean): string {
+        if (payed) return "recebido";
+        return "a receber";
+    }
 
     useEffect(() => {
-        setSelectedDay(dayjs().format("D"))
+        setSelectedDay(dayjs().format("D"));
+        if (list.length > 0) {
+            setRenderedItems(list.map(item => ({
+                title: item[titleParam === "verification" ? verifyTitleParam(item.payed) : titleParam],
+                startDate: moment(item[startDateParam]).toDate() as any,
+                endDate: moment(item[startDateParam]).subtract(1, "hour").toDate()
+            })))
+        }
     }, []);
+
+    console.log(moment().subtract(1, 'hour').toDate());
 
     return (
         <View >
@@ -48,13 +64,7 @@ export const Calendar: React.FC = (): React.ReactElement => {
                 alwaysBounceVertical>
                 <Timetable
                     enableSnapping
-                    items={[
-                        {
-                            title: "Evento",
-                            startDate: moment().subtract(1, 'hour').toDate(),
-                            endDate: moment().add(1, 'hour').toDate(),
-                        }
-                    ]}
+                    items={renderedItems}
                     linesLeftInset={2}
                     renderItem={props => <View key={props.key}
                         style={{

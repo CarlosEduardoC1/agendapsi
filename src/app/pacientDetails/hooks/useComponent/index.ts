@@ -7,7 +7,7 @@ import { OPTIONS } from "./config";
 import { GlobalContext } from "../../../../context/App";
 import { usePacient } from "../../../../hooks";
 
-type ScreenNames = ["AddPacient", "AddSession", "Paciente"];
+type ScreenNames = ["AddPacient", "AddSession", "Paciente", "PaymentReport"];
 type ScreenNamesRecorded = Record<ScreenNames[number], any>;
 
 export const useComponent = ({ pacient }: Props): UseComponent => {
@@ -75,10 +75,15 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
     navigate("AddSession", { hasPacient: true, pacient: String(pacient.id) });
   }
 
+  function navigateToReport() {
+    navigate("PaymentReport", { pacient_id: pacient.id });
+  }
+
   return {
     openLinking,
     newSession,
     oppenedValues,
-    sessionsQuantity
+    sessionsQuantity,
+    navigateToReport
   };
 };

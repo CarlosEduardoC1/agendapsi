@@ -7,6 +7,7 @@ import { GlobalContext } from "../../../context/App";
 import { AddSession } from "../../../app/addSession";
 import { AddPacient } from "../../../app/addPacient";
 import { PacientDetails } from "../../../app/pacientDetails";
+import { PaymentReport } from "../../../app/paymentReport";
 import { Pacient as TPacient } from "../../../@types";
 
 type RootStackParamList = {
@@ -15,6 +16,7 @@ type RootStackParamList = {
   Paciente: any;
   AddSession: { hasPacient: boolean, pacient: string };
   PacientDetails: { pacient: TPacient };
+  PaymentReport: { pacient_id: string | number };
 }
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
@@ -29,6 +31,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="AddSession" component={AddSession} />
       <Drawer.Screen name="AddPacient" component={AddPacient} />
       <Drawer.Screen name="PacientDetails" component={PacientDetails} />
+      <Drawer.Screen name="PaymentReport" component={PaymentReport} />
     </Drawer.Navigator>
   );
 }

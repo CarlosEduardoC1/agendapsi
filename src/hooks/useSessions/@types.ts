@@ -6,4 +6,5 @@ export type UseSession = {
   onGetSingle: (id: number) => Promise<Response<Sessions>>;
   onUpdate: (id: number, data: Partial<Sessions>) => Promise<Response>;
   onDelete: (id: number) => Promise<Response>;
+  onGetByPacient: (id: string) => Promise<Sessions[]>;
 };

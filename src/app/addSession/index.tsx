@@ -10,6 +10,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from '@expo/vector-icons';
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { masks } from "../../utils";
 
 type RootStackParamList = {
     AddSession: { hasPacient: boolean, pacient: string };
@@ -71,7 +72,7 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
                                 keyboardType="number-pad"
                                 bg={"#272A30"}
                                 {...field}
-                                onChangeText={txt => field.onChange(txt)}
+                                onChangeText={txt => field.onChange(masks.moneyMask(txt))}
                             />
                             <FormControl.ErrorMessage>{errors.session_value?.message}</FormControl.ErrorMessage>
                         </FormControl>

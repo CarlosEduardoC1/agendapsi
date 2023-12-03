@@ -9,6 +9,7 @@ export const useFetch = (): UseFetch => {
   const onSubmit = useCallback(async (data: Pacient): Promise<any> => {
     const formData = { ...data };
     formData.telefone = formData.telefone.replace(/\D/g, "");
+    formData.valor = formData.valor.replaceAll(".", "").replace(",", ".");
     return await onSave(formData);
   }, []);
 
@@ -25,6 +26,6 @@ export const useFetch = (): UseFetch => {
   return {
     onSubmit,
     onRemove,
-    onUpdateF
+    onUpdateF,
   };
 };
