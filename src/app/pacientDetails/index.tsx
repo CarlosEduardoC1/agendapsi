@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { useComponent } from "./hooks";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Button, Divider, NativeBaseProvider } from "native-base";
-import { masks } from "../../utils";
+import { masks, openLinking } from "../../utils";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pacient } from "../../@types";
 import { Entypo } from '@expo/vector-icons';
@@ -15,7 +15,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'PacientDetails'>;
 
 export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement => {
-    const { openLinking, newSession, oppenedValues, sessionsQuantity, navigateToReport } = useComponent({ pacient: route.params.pacient });
+    const { newSession, oppenedValues, sessionsQuantity, navigateToReport } = useComponent({ pacient: route.params.pacient });
 
     return (
         <View className={styles["container"]}>
@@ -29,7 +29,7 @@ export const PacientDetails: React.FC<Props> = ({ route }): React.ReactElement =
                         <Text style={{ color: "white" }}>{masks.phoneMask(route.params.pacient.telefone)}</Text>
                     </View>
                     <Pressable className={styles["phone-icon"]} onPress={() => openLinking("tel", route.params.pacient.telefone)}>
-                        <FontAwesome5 name="phone-alt" size={18} color="#E91E63" style={{ opacity: 1 }} />
+                        <FontAwesome5 name="phone-alt" size={12} color="#E91E63" style={{ opacity: 1 }} />
                     </Pressable>
                 </View>
 

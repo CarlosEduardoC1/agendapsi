@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { State, UseComponent } from "./@types";
 import { INITIAL_STATE } from "../../config";
 import { Mode } from "../../../../@types";
@@ -8,7 +8,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
-dayjs.locale("pt-br")
+dayjs.locale("pt-br");
 
 export const useComponent = (): UseComponent => {
   const [{ mode, list, loading }, setState] = useState<State>(INITIAL_STATE);
@@ -29,17 +29,16 @@ export const useComponent = (): UseComponent => {
         if (response) {
           for (let i = 0; i < response?.length; i++) {
             const pacient = await onGetSingle(response[i].id_paciente);
-            console.log(dayjs(response[i].schedule_date).format(
-              mode === "list" ? "LLLL" : "YYYY-MM-DD HH:mm:ss"
-            ));
             dayjs(response[i].schedule_date).format(
               mode === "list" ? "LLLL" : "YYYY-MM-DD HH:mm:ss"
             );
             if (pacient.nome) {
               result.push({
                 date: String(response[i].schedule_date),
+                sessionId: String(response[i].id),
                 content: [
                   {
+                    id: String(pacient.id),
                     pacientName: pacient.nome,
                     sessionHour: String(response[i].schedule_date),
                   },
@@ -48,7 +47,6 @@ export const useComponent = (): UseComponent => {
             }
           }
         }
-        console.log(result);
         setState((state) => ({
           ...state,
           list: result,

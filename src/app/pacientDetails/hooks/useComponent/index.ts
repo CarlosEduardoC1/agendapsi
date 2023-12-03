@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Linking } from "react-native";
-import { SupportedModes, UseComponent, Props } from "./@types";
+import { UseComponent, Props } from "./@types";
 import { OPTIONS } from "./config";
 import { GlobalContext } from "../../../../context/App";
 import { usePacient } from "../../../../hooks";
@@ -59,18 +59,6 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
     getSessionsQuantity();
   }, [pacient]);
 
-  function openLinking(mode: SupportedModes, url: string) {
-    if (mode === "whatsapp") {
-      Linking.canOpenURL(`whatsapp://send?phone=${url}`).then((can) => {
-        if (can) {
-          Linking.openURL(`whatsapp://send?phone=${url}`);
-        }
-      });
-    } else {
-      Linking.openURL(`${mode}:${url}`);
-    }
-  }
-
   function newSession() {
     navigate("AddSession", { hasPacient: true, pacient: String(pacient.id) });
   }
@@ -80,7 +68,6 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
   }
 
   return {
-    openLinking,
     newSession,
     oppenedValues,
     sessionsQuantity,

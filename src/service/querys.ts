@@ -64,20 +64,23 @@ export default class Querys extends DataBase {
 
   public findOne<T>(id: number): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.db.transaction((tx) =>
-        tx.executeSql(
-          `select * from ${this.table} where id = ${id};`,
-          [],
-          (_, { rows }) => {
-            resolve(rows["_array"] as T);
-          },
-
-          (sqlError) => {
-            console.log("ERROR FIND ONE", sqlError);
-            reject(sqlError);
-            return false;
-          }
-        )
+      this.db.transaction(
+        (tx) =>
+          tx.executeSql(
+            `select * from ${this.table} where id = ${id};`,
+            [],
+            (_, { rows }) => {
+              resolve(rows["_array"] as T);
+            },
+            (sqlError, error) => {
+              console.log("ERROR FIND ONE", error);
+              reject(sqlError);
+              return false;
+            }
+          ),
+        (error) => {
+          console.log("REAL ERROR", error);
+        }
       );
     });
   }
@@ -98,8 +101,8 @@ export default class Querys extends DataBase {
             resolve(response["rows"]["_array"] as T);
           },
 
-          (sqlError) => {
-            console.log("ERROR UPDATE", sqlError);
+          (sqlError, realError) => {
+            console.log("ERROR UPDATE", realError);
             reject(sqlError);
             return false;
           }

@@ -24,24 +24,14 @@ export const useSession = (): UseSession => {
     }
   }, []);
 
-  const onGetSingle = useCallback(
-    async (id: number): Promise<Response<Sessions>> => {
-      try {
-        const single = await query.findOne<Sessions>(id);
-        return {
-          status: 200,
-          message: "",
-          data: single,
-        };
-      } catch (error) {
-        return {
-          status: 400,
-          message: "Não foi possível encontrar os dados da sessão.",
-        };
-      }
-    },
-    []
-  );
+  const onGetSingle = useCallback(async (id: number): Promise<Sessions> => {
+    try {
+      const result = await query.findOne<Sessions[]>(id);
+      return result[0];
+    } catch (error) {
+      throw new Error("Nenhuma sessão encontrada");
+    }
+  }, []);
 
   const onUpdate = useCallback(
     async (id: number, data: Partial<Sessions>): Promise<Response> => {
@@ -76,14 +66,17 @@ export const useSession = (): UseSession => {
     }
   }, []);
 
-  const onGetByPacient = useCallback(async (id: string): Promise<Sessions[]> => {
-    try {
-      const response = await query.getSessionByPacient<Sessions>(id);
-      return response;
-    } catch (error) {
-      throw new Error("Nenhum dado encontrado");
-    }
-  }, []);
+  const onGetByPacient = useCallback(
+    async (id: string): Promise<Sessions[]> => {
+      try {
+        const response = await query.getSessionByPacient<Sessions>(id);
+        return response;
+      } catch (error) {
+        throw new Error("Nenhum dado encontrado");
+      }
+    },
+    []
+  );
 
   return { onSave, onGetAll, onGetSingle, onUpdate, onDelete, onGetByPacient };
 };

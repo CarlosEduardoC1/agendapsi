@@ -38,6 +38,8 @@ export type Tabs = "schedule" | "pacient" | "financy";
 
 export type Mode = "event" | "list";
 
+export type SupportedModes = "tel" | "mailto" | "whatsapp";
+
 export type Schedule<T> = T[];
 
 export type Errors<T> = {
