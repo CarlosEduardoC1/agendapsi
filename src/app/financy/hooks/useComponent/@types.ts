@@ -3,6 +3,7 @@ import { Months, Sessions } from "../../../../@types";
 export type UseComponent = {
   chartData: ChartData[];
   oppenedSessions: Sessions[];
+  handleRedirect: (id: string, sId: string) => void;
 };
 
 export type ChartData = {
