@@ -1,4 +1,4 @@
-import { Response, Sessions } from "../../@types";
+import { Months, Response, SessionMode, Sessions } from "../../@types";
 
 export type UseSession = {
   onSave: (data: Sessions) => Promise<Response>;
@@ -7,4 +7,6 @@ export type UseSession = {
   onUpdate: (id: number, data: Partial<Sessions>) => Promise<Response>;
   onDelete: (id: number) => Promise<Response>;
   onGetByPacient: (id: string) => Promise<Sessions[]>;
+  onGetOnlyValuesByMonth: (month: Months, mode: SessionMode) => Promise<any>;
+  onGetOppened: () => Promise<Sessions[]>;
 };

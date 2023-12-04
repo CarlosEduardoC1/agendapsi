@@ -9,12 +9,14 @@ import { AddPacient } from "../../../app/addPacient";
 import { PacientDetails } from "../../../app/pacientDetails";
 import { PaymentReport } from "../../../app/paymentReport";
 import { SessionResume } from "../../../app/sessionResume";
+import { Financy } from "../../../app/financy";
 import { Pacient as TPacient } from "../../../@types";
 
 type RootStackParamList = {
-  AddPacient: { isEditable: boolean, pacient: TPacient };
   Agenda: any;
   Paciente: any;
+  Financeiro: {};
+  AddPacient: { isEditable: boolean, pacient: TPacient };
   AddSession: { hasPacient: boolean, pacient: string };
   PacientDetails: { pacient: TPacient };
   PaymentReport: { pacient_id: string | number };
@@ -35,6 +37,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="PacientDetails" component={PacientDetails} />
       <Drawer.Screen name="PaymentReport" component={PaymentReport} />
       <Drawer.Screen name="SessionResume" component={SessionResume} />
+      <Drawer.Screen name="Financeiro" component={Financy} />
     </Drawer.Navigator>
   );
 }

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { UseSession } from "./@types";
-import { Response, Sessions } from "../../@types";
+import { Months, Response, SessionMode, Sessions } from "../../@types";
 import Querys from "../../service/querys";
 
 export const useSession = (): UseSession => {
@@ -78,5 +78,35 @@ export const useSession = (): UseSession => {
     []
   );
 
-  return { onSave, onGetAll, onGetSingle, onUpdate, onDelete, onGetByPacient };
+  const onGetOnlyValuesByMonth = useCallback(
+    async (month: Months, mode: SessionMode) => {
+      try {
+        const response = await query.getSessionByValues(month, mode);
+        return response;
+      } catch (error) {
+        throw new Error("Nenhum dado encontrado");
+      }
+    },
+    []
+  );
+
+  const onGetOppened = useCallback(async (): Promise<Sessions[]> => {
+    try {
+      const response = await query.getSessionsOpen();
+      return response;
+    } catch (error) {
+      throw new Error("Nenhum dado encontrado");
+    }
+  }, []);
+
+  return {
+    onSave,
+    onGetAll,
+    onGetSingle,
+    onUpdate,
+    onDelete,
+    onGetByPacient,
+    onGetOnlyValuesByMonth,
+    onGetOppened,
+  };
 };

@@ -48,3 +48,19 @@ export type Errors<T> = {
     [K: string]: string;
   };
 };
+
+export type Months =
+  | "Jan"
+  | "Fev"
+  | "Mar"
+  | "Abr"
+  | "Mai"
+  | "Jun"
+  | "Jul"
+  | "Ago"
+  | "Set"
+  | "Out"
+  | "Nov"
+  | "Dez";
+
+export type SessionMode = "received" | "toreceive";

@@ -1,6 +1,7 @@
-import { Tables } from "../@types";
+import { Months, SessionMode, Sessions, Tables } from "../@types";
 import DataBase from ".";
 import { DatabaseConnection } from "./connect";
+import { parseMonths } from "../utils";
 
 export default class Querys extends DataBase {
   public table: Tables | null = null;
@@ -188,6 +189,46 @@ export default class Querys extends DataBase {
           },
           (sqlError) => {
             reject(sqlError);
+            return false;
+          }
+        )
+      );
+    });
+  }
+
+  public getSessionByValues(month: Months, mode: SessionMode) {
+    return new Promise((resolve, reject) => {
+      this.db.transaction((tx) =>
+        tx.executeSql(
+          `select strftime('%m',schedule_date) as month, sum(sessionValue) as valor from sessions where payed = ${
+            mode === "received" ? 1 : 0
+          } AND month = "${parseMonths("byMonth", month)}" group by month;`,
+          [],
+          (_, response) => {
+            resolve(response.rows._array);
+          },
+          (sqlError, realError) => {
+            console.log("REAL ERROR", realError);
+            reject(realError);
+            return false;
+          }
+        )
+      );
+    });
+  }
+
+  public getSessionsOpen(): Promise<Sessions[]> {
+    return new Promise((resolve, reject) => {
+      this.db.transaction((tx) =>
+        tx.executeSql(
+          `select id, id_paciente, sessionValue from sessions where payed = 0;`,
+          [],
+          (_, response) => {
+            resolve(response.rows._array);
+          },
+          (sqlError, realError) => {
+            console.log("REAL ERROR", realError);
+            reject(realError);
             return false;
           }
         )
