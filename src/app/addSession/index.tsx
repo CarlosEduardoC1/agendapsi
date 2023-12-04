@@ -8,6 +8,7 @@ import { Select, FormControl, NativeBaseProvider, Input, Switch } from "native-b
 import { useComponent } from "./hooks";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from '@expo/vector-icons';
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { masks } from "../../utils";
@@ -19,7 +20,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'AddSession'>;
 
 export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
-    
+
     const { control,
         handleSubmit,
         formState: { errors },
@@ -150,16 +151,11 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
                 />
             </NativeBaseProvider>
             <SafeAreaView>
-                <DateTimePickerModal
-                    isVisible={open_date_picker}
-                    mode="datetime"
-                    style={{ backgroundColor: "#272A30" }}
-                    onConfirm={(props) => {
-                        setValue("date", props);
-                        setValue("date_time", parseDate(props))
-                    }}
-                    onCancel={() => setDatePicker("close")}
-                />
+                {open_date_picker && <DateTimePicker
+                    value={new Date()}
+                    mode="time"
+                    display="compact"
+                />}
             </SafeAreaView>
         </View >
     )
