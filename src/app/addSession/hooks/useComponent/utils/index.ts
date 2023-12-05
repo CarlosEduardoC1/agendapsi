@@ -4,7 +4,6 @@ import { FormValues } from "../../../@types";
 
 export function handleSessionValues(data: FormValues): Sessions {
   const form: any = {};
-  console.log(new Date(data.date))
   form.id_paciente = Number(data.pacient);
   form.schedule_date = String(dayjs(data.date).format("YYYY-MM-DD HH:mm:ss"));
   form.payed = Boolean(data.payed);

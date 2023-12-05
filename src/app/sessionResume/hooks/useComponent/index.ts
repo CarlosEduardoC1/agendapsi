@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 export const useComponent = ({ id, sessionId }: Props): UseComponent => {
   const [{ pacientData, sessionData }, setState] =
     useState<State>(INITIAL_STATE);
-  const { setOptions, goBack } = useNavigation<any>();
+  const { setOptions, goBack, navigate } = useNavigation<any>();
   const { onGetPacient, onGetSession } = useFetch();
 
   const getPacient = useCallback(async () => {
@@ -36,7 +36,7 @@ export const useComponent = ({ id, sessionId }: Props): UseComponent => {
     setOptions({
       ...OPTIONS(
         () => goBack(),
-        () => console.log("HANDLE EDIT")
+        () => navigate("EditSession", { sessionId })
       ),
     });
   }

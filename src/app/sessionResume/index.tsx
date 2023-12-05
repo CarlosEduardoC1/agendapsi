@@ -1,13 +1,11 @@
 import { Pressable, Text, View } from "react-native"
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Pacient } from "../../@types";
 import { useComponent, useCustomForm } from "./hooks";
 import styles from "./styles.module.scss";
-import { Divider, NativeBaseProvider, Button, FormControl, Switch } from "native-base";
+import { Divider, NativeBaseProvider, Button, } from "native-base";
 import { masks, openLinking } from "../../utils";
 import { FontAwesome5 } from "@expo/vector-icons";
 import moment from "moment";
-import { Controller, useForm } from "react-hook-form";
 
 type RootStackParamList = {
     SessionResume: { id: string, sessionId: string };

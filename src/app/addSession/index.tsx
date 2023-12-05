@@ -6,10 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
 import { Select, FormControl, NativeBaseProvider, Input, Switch } from "native-base";
 import { useComponent } from "./hooks";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import DateTimePicker from "@react-native-community/datetimepicker";
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { masks } from "../../utils";
 
@@ -20,11 +18,10 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'AddSession'>;
 
 export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
-
     const { control,
         handleSubmit,
         formState: { errors },
-        setValue } = useForm<FormValues>({
+        setValue, watch } = useForm<FormValues>({
             resolver: yupResolver<any>(schema),
             defaultValues: {
                 pacient: Number(route?.params?.pacient)
@@ -35,6 +32,8 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
         open_date_picker,
         setDatePicker,
         parseDate } = useComponent({ handleSubmit });
+
+    console.log(watch());
 
     return (
         <View className={styles["container"]}>
@@ -151,11 +150,16 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
                 />
             </NativeBaseProvider>
             <SafeAreaView>
-                {open_date_picker && <DateTimePicker
-                    value={new Date()}
-                    mode="time"
-                    display="compact"
-                />}
+                <DateTimePickerModal
+                    isVisible={open_date_picker}
+                    mode="datetime"
+                    onConfirm={date => {
+                        setValue("date_time", parseDate(date));
+                        setValue("date", date);
+                        setDatePicker("close")
+                    }}
+                    onCancel={() => setDatePicker("close")}
+                />
             </SafeAreaView>
         </View >
     )

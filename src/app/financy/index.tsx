@@ -44,7 +44,7 @@ export const Financy: React.FC = (): React.ReactElement => {
                 <View style={{ margin: 5 }} />
                 <ScrollView>
                     {oppenedSessions.map(item => (
-                        <Pressable onPress={() => handleRedirect(String(item.id_paciente), String(item.id))}
+                        <Pressable key={item.id} onPress={() => handleRedirect(String(item.id_paciente), String(item.id))}
                             style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: 10 }}>
                             <View style={{ display: "flex", flexDirection: "column" }}>
                                 <Text style={{ color: "white" }}>R$ {masks.moneyMask(item.sessionValue)}</Text>

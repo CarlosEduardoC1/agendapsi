@@ -17,17 +17,14 @@ export const useComponent = ({ handleSubmit }: Props): UseComponent => {
 
   const createNewSession = useCallback(async (data: FormValues) => {
     try {
-      console.log("CALLED");
       const formValues = handleSessionValues(data);
-      const response = await onSubmit(formValues);
-      console.log(response);
+      await onSubmit(formValues);
       navigate("Agenda");
       dispatch({
         type: ActionTypes.ACTIVE_TAB,
         payload: "schedule",
       });
     } catch (error) {
-      console.log(error);
       throw new Error(JSON.stringify(error));
     }
   }, []);
@@ -50,12 +47,7 @@ export const useComponent = ({ handleSubmit }: Props): UseComponent => {
   useEffect(() => {
     onGetPacients();
     setOptions({
-      ...OPTIONS(
-        () => goBack(),
-        handleSubmit(createNewSession, (error: any) =>
-          console.log("ERRRRRO", error)
-        )
-      ),
+      ...OPTIONS(() => goBack(), handleSubmit(createNewSession)),
     });
   }, [onGetPacients]);
 
@@ -69,12 +61,12 @@ export const useComponent = ({ handleSubmit }: Props): UseComponent => {
   function parseDate(date: Date): string {
     return dayjs(date).format("DD/MM/YYYY HH:mm:ss");
   }
-
+  
   return {
     pacient_list,
     open_date_picker,
     setDatePicker,
     parseDate,
-    createNewSession,
+    createNewSession
   };
 };
