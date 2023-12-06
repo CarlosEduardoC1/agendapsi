@@ -27,6 +27,15 @@ export const useUsers = (): UseUsers => {
     }
   }, []);
 
+  const onGetOne = useCallback(async (id: string): Promise<Users[]> => {
+    try {
+      const single = await query.findOne<Users[]>(Number(id));
+      return single;
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
+  }, []);
+
   const onUpdate = useCallback(
     async (id: number, data: Partial<Users>): Promise<Response> => {
       try {
@@ -60,5 +69,5 @@ export const useUsers = (): UseUsers => {
     }
   }, []);
 
-  return { onSave, onGet, onUpdate, onDelete };
+  return { onSave, onGet, onUpdate, onDelete, onGetOne };
 };

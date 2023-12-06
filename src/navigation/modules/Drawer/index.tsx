@@ -12,6 +12,7 @@ import { SessionResume } from "../../../app/sessionResume";
 import { Financy } from "../../../app/financy";
 import { EditSession } from "../../../app/editSession";
 import { Profile } from "../../../app/profile";
+import { EditProfile } from "../../../app/editProfile";
 import { Pacient as TPacient } from "../../../@types";
 
 type RootStackParamList = {
@@ -25,6 +26,7 @@ type RootStackParamList = {
   SessionResume: { id: string, sessionId: string };
   EditSession: { sessionId: string }
   Profile: {};
+  EditProfile: { id: string | number };
 }
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
@@ -44,6 +46,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Financeiro" component={Financy} />
       <Drawer.Screen name="EditSession" component={EditSession} />
       <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="EditProfile" component={EditProfile} />
     </Drawer.Navigator>
   );
 }
