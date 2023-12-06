@@ -13,6 +13,7 @@ export default class DataBase {
     const sql: string[] = [
       `create table if not exists users (
         id integer not null primary key autoincrement,
+        nome varchar(150),
         imagem longtext,
         email varchar(100)
         );`,
@@ -35,6 +36,8 @@ export default class DataBase {
 
           foreign key (id_paciente) references pacient(id)
         );`,
+      // "delete from users;",    
+      // "delete from sqlite_sequence where name='users';"
     ];
 
     this.db.transaction(

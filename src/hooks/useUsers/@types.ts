@@ -1,8 +1,8 @@
-import { Response, Users } from "@/@types";
+import { Response, Users } from "../../@types";
 
 export type UseUsers = {
   onSave: (data: Users) => Promise<Response>;
-  onGetSingle: (id: number) => Promise<Users | Response>;
+  onGet: () => Promise<Users[]>;
   onUpdate: (id: number, data: Partial<Users>) => Promise<Users | Response>;
   onDelete: (id: number) => Promise<Response>;
 };

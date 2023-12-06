@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { UseUsers } from "./@types";
-import { Response, Users } from "@/@types";
+import { Response, Users } from "../../@types";
 import Querys from "../../service/querys";
 
 export const useUsers = (): UseUsers => {
@@ -19,20 +19,14 @@ export const useUsers = (): UseUsers => {
     }
   }, []);
 
-  const onGetSingle = useCallback(
-    async (id: number): Promise<Users | Response> => {
-      try {
-        const single = await query.findOne(id);
-        return single[0];
-      } catch (error) {
-        return {
-          status: 400,
-          message: "Não foi possível encontrar os dados do usuário.",
-        };
-      }
-    },
-    []
-  );
+  const onGet = useCallback(async (): Promise<Users[]> => {
+    try {
+      const single = await query.findAll<Users[]>();
+      return single;
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
+  }, []);
 
   const onUpdate = useCallback(
     async (id: number, data: Partial<Users>): Promise<Response> => {
@@ -67,5 +61,5 @@ export const useUsers = (): UseUsers => {
     }
   }, []);
 
-  return { onSave, onGetSingle, onUpdate, onDelete };
+  return { onSave, onGet, onUpdate, onDelete };
 };
