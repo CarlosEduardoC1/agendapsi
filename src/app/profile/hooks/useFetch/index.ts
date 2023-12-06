@@ -26,8 +26,7 @@ export const useFetch = (): UseFetch => {
   const updateUser = useCallback(async (data: Users) => {
     try {
       if (data.id) {
-        const result = await onUpdate(Number(data.id), data);
-        console.log(result);
+        await onUpdate(Number(data.id), data);
       } else {
         throw new Error("Não foi possível atualizar o usuário");
       }

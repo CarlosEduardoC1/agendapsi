@@ -18,7 +18,6 @@ export const useComponent = ({ handleSubmit, id }: Props): UseComponent => {
     const routes = getState()?.routes;
 
     const prevRoute = routes[routes.length - 2];
-    console.log(routes);
   }, []);
 
   const deleteSession = useCallback(async () => {

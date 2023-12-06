@@ -23,22 +23,17 @@ export const useFetch = (): UseFetch => {
     }
   }, []);
 
-  const onUpdateSession = useCallback(
-    async (data: Sessions): Promise<void> => {
-      try {
-        const response = await onUpdate(Number(data.id), data);
-        console.log("UPDATE RESPONSE", response);
-      } catch (error) {
-        console.log("UPDATE ERROR");
-        throw new Error(JSON.stringify(error));
-      }
-    },
-    []
-  );
+  const onUpdateSession = useCallback(async (data: Sessions): Promise<void> => {
+    try {
+      await onUpdate(Number(data.id), data);
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
+  }, []);
 
   return {
     onGetPacient,
     onGetSession,
-    onUpdateSession
+    onUpdateSession,
   };
 };

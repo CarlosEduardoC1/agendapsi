@@ -21,7 +21,7 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
     const { control,
         handleSubmit,
         formState: { errors },
-        setValue, watch } = useForm<FormValues>({
+        setValue } = useForm<FormValues>({
             resolver: yupResolver<any>(schema),
             defaultValues: {
                 pacient: Number(route?.params?.pacient)
@@ -32,8 +32,6 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
         open_date_picker,
         setDatePicker,
         parseDate } = useComponent({ handleSubmit });
-
-    console.log(watch());
 
     return (
         <View className={styles["container"]}>

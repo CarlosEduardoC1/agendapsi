@@ -30,8 +30,6 @@ export const Calendar: React.FC<Props> = ({ list, titleParam, startDateParam }):
         }
     }, []);
 
-    console.log(moment().subtract(1, 'hour').toDate());
-
     return (
         <View >
             <View className={styles["container"]} style={{ flex: 1 }}>

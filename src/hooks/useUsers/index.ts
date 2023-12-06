@@ -8,8 +8,7 @@ export const useUsers = (): UseUsers => {
 
   const onSave = useCallback(async (data: Users): Promise<Response> => {
     try {
-      const id = await query.insertation(data);
-      console.log(id);
+      await query.insertation(data);
       return {
         status: 200,
         message: "Usuário criado com sucesso.",

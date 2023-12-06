@@ -10,7 +10,6 @@ export const useFetch = (): UseFetch => {
       try {
         await onUpdate(Number(id), data);
       } catch (error) {
-        console.log(error);
         throw new Error(JSON.stringify(error));
       }
     },
@@ -21,7 +20,6 @@ export const useFetch = (): UseFetch => {
     try {
       await onDelete(Number(id));
     } catch (error) {
-      console.log(error);
       throw new Error(JSON.stringify(error));
     }
   }, []);
@@ -31,7 +29,6 @@ export const useFetch = (): UseFetch => {
       const response = await onGetSingle(Number(id));
       return response;
     } catch (error) {
-      console.log(error);
       throw new Error(JSON.stringify(error));
     }
   }, []);
