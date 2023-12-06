@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChartData, State, UseComponent } from "./@types";
-import { INITIAL_STATE } from "./config";
+import { INITIAL_STATE, OPTIONS } from "./config";
 import { useFetch } from "../useFetch";
 import { getLastsSixMonths, defaultChartData } from "./utils";
 import { useNavigation } from "@react-navigation/native";
@@ -9,7 +9,7 @@ export const useComponent = (): UseComponent => {
   const [{ chartData, oppenedSessions }, setState] =
     useState<State>(INITIAL_STATE);
   const { onGetReceived, onGetToReceive, onGetNotPayed } = useFetch();
-  const { navigate } = useNavigation<any>();
+  const { navigate, setOptions } = useNavigation<any>();
 
   const lastSixMonths = getLastsSixMonths();
 
@@ -51,6 +51,9 @@ export const useComponent = (): UseComponent => {
   useEffect(() => {
     getChartData();
     getOppenedSessions();
+    setOptions({
+      ...OPTIONS()
+    })
   }, [getChartData, getOppenedSessions]);
 
   function handleRedirect(id: string, sessionId: string) {

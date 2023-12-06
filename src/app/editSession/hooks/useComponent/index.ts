@@ -9,13 +9,16 @@ import { useFetch } from "../useFetch";
 export const useComponent = ({ handleSubmit, id }: Props): UseComponent => {
   const [{ alert, sessions, open_date_picker }, setState] =
     useState<State>(INITIAL_STATE);
-  const { goBack, setOptions } = useNavigation<any>();
+  const { goBack, setOptions, getState } = useNavigation<any>();
   const { onDeleteSessions, onGetSessions, onUpdateSessions } = useFetch();
 
   const updateSession = useCallback(async (data: any) => {
     const form = handleSessionValues(data);
     await onUpdateSessions(id, form);
-    goBack();
+    const routes = getState()?.routes;
+
+    const prevRoute = routes[routes.length - 2];
+    console.log(routes);
   }, []);
 
   const deleteSession = useCallback(async () => {
