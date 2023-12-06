@@ -21,7 +21,7 @@ export const DrawerContent: React.FC = (): React.ReactElement => {
                     <MaterialCommunityIcons name="head" size={35} color="white" />
                     <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>Seu perfil</Text>
                 </Pressable>
-                <Pressable className={styles["pages-redirect"]}>
+                <Pressable onPress={() => navigate("About")} className={styles["pages-redirect"]}>
                     <Ionicons name="ios-share" size={35} color="white" />
                     <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>Sobre</Text>
                 </Pressable>
