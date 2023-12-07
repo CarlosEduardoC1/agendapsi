@@ -13,10 +13,12 @@ export const DrawerContent: React.FC = ({ exit, user, logged }: any): React.Reac
     return (
         <DrawerContentScrollView className={styles["container"]}>
             <View>
-                <Pressable onPress={() => dispatch({
-                    type: ActionTypes.SHOW_REGISTER_PAGE,
-                    payload: true
-                })}>
+                <Pressable onPress={() => {
+                    if (user.length > 0 && user[0].email === "seuemail@mail.com") dispatch({
+                        type: ActionTypes.SHOW_REGISTER_PAGE,
+                        payload: true
+                    })
+                }}>
                     <MaterialCommunityIcons name="account-circle-outline" size={65} color="#E91E63" />
                     <Text className={styles["drawer-content-text"]}>{
                         logged && user.length > 0 ? user?.[0].nome : "Logar"}</Text>
