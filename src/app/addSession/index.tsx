@@ -10,6 +10,8 @@ import { Entypo, AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { masks } from "../../utils";
+import { useIsFocused } from "@react-navigation/native";
+import { useEffect } from "react";
 
 type RootStackParamList = {
     AddSession: { hasPacient: boolean, pacient: string };
@@ -18,10 +20,12 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'AddSession'>;
 
 export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
+    const isFocused = useIsFocused();
     const { control,
         handleSubmit,
         formState: { errors },
-        setValue } = useForm<FormValues>({
+        setValue,
+        reset } = useForm<FormValues>({
             resolver: yupResolver<any>(schema),
             defaultValues: {
                 pacient: Number(route?.params?.pacient)
@@ -32,6 +36,13 @@ export const AddSession: React.FC<Props> = ({ route }): React.ReactElement => {
         open_date_picker,
         setDatePicker,
         parseDate } = useComponent({ handleSubmit });
+
+    useEffect(() => {
+        if (isFocused) {
+            if (route?.params) { reset({ pacient: Number(route?.params?.pacient) }); }
+            else reset();
+        }
+    }, [isFocused, route.params]);
 
     return (
         <View className={styles["container"]}>

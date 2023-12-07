@@ -36,7 +36,7 @@ export default class DataBase {
 
           foreign key (id_paciente) references pacient(id)
         );`,
-      // "delete from users;",    
+      // "delete from sessions;",    
       // "delete from sqlite_sequence where name='users';"
     ];
 

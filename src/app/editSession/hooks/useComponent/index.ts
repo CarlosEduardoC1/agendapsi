@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Props, State, UseComponent } from "./@types";
 import { INITIAL_STATE, OPTIONS } from "./config";
 import { useCallback, useEffect, useState } from "react";
@@ -11,6 +11,7 @@ export const useComponent = ({ handleSubmit, id }: Props): UseComponent => {
     useState<State>(INITIAL_STATE);
   const { goBack, setOptions, getState } = useNavigation<any>();
   const { onDeleteSessions, onGetSessions, onUpdateSessions } = useFetch();
+  const isFocused = useIsFocused();
 
   const updateSession = useCallback(async (data: any) => {
     const form = handleSessionValues(data);
@@ -32,7 +33,7 @@ export const useComponent = ({ handleSubmit, id }: Props): UseComponent => {
       ...state,
       sessions: response,
     }));
-  }, [id]);
+  }, [id, isFocused]);
 
   useEffect(() => {
     setOptions({

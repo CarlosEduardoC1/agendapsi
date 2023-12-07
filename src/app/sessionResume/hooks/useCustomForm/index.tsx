@@ -39,7 +39,7 @@ export const useCustomForm = ({ sessionData }: any): UseCustomForm => {
                                 {...field}
                                 onTrackColor={"red.500"}
                                 isChecked={Boolean(field.value)}
-                                onToggle={ev => { field.onChange(ev); onUpdateSession({ ...data, id: sessionData.id }) }} />
+                                onToggle={ev => { field.onChange(ev); onUpdateSession({ ...sessionData, executed: ev }) }} />
                         </FormControl>
                     )
                     }
@@ -55,7 +55,7 @@ export const useCustomForm = ({ sessionData }: any): UseCustomForm => {
                                 {...field}
                                 onTrackColor={"red.500"}
                                 isChecked={Boolean(field.value)}
-                                onToggle={ev => { field.onChange(ev); onUpdateSession({ ...data, id: sessionData.id }) }} />
+                                onToggle={ev => { field.onChange(ev); onUpdateSession({ ...sessionData, payed: ev }) }} />
                         </FormControl>
                     )}
                 />

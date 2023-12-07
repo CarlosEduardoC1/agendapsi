@@ -12,6 +12,7 @@ import { ALERT_DELETE_ITEM } from "./config";
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 type RootStackParamList = {
     AddPacient: { isEditable: boolean, pacient: Pacient };
@@ -20,6 +21,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'AddPacient'>;
 
 export const AddPacient: React.FC<Props> = ({ route }): React.ReactElement => {
+    const isFocused = useIsFocused();
     const { control,
         handleSubmit,
         formState: { errors },
@@ -33,7 +35,16 @@ export const AddPacient: React.FC<Props> = ({ route }): React.ReactElement => {
         pacient: route?.params?.pacient
     });
 
-    useEffect(() => { if (route.params) reset({ ...route.params.pacient }) }, [route.params])
+    useEffect(() => {
+        if (isFocused) {
+        console.log("PARAMOS",route.params);
+            if (route?.params?.isEditable) {
+                reset({ ...route?.params?.pacient })
+            } else {
+                reset()
+            }
+        }
+    }, [route.params, isFocused])
 
     return (
         <View className={styles["container"]}>

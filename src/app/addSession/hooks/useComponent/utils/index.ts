@@ -11,5 +11,6 @@ export function handleSessionValues(data: FormValues): Sessions {
   form.sessionValue = data.session_value;
   form.received = 0.0;
   form.toReceive = data.session_value;
+  
   return form;
 }

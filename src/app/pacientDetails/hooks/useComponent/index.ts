@@ -20,8 +20,14 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
 
   const getOppenedValues = useCallback(async () => {
     const values = await onGetValues(pacient.id);
+    let sum = 0;
+    values.forEach((item: any) => {
+      const value = parseFloat(item.sessionValue).toFixed(2);
+      sum += Number(value);
+    });
+    
     if (values.length > 0) {
-      setOppenedValues(values[0].soma);
+      setOppenedValues(sum.toFixed(2) as any);
     } else {
       setOppenedValues(undefined);
     }
@@ -40,7 +46,10 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
     setOptions({
       ...OPTIONS(
         () => {
-          navigate("Paciente");
+          navigate("Paciente", {
+            isEditable: false, 
+            pacient: null
+          });
           dispatch({
             type: ActionTypes.ACTIVE_TAB,
             payload: "pacient",
@@ -71,6 +80,6 @@ export const useComponent = ({ pacient }: Props): UseComponent => {
     newSession,
     oppenedValues,
     sessionsQuantity,
-    navigateToReport
+    navigateToReport,
   };
 };

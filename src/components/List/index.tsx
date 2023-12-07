@@ -5,18 +5,18 @@ import styles from "./styles.module.scss";
 
 import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
+import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import 'moment/locale/pt-br'
-import { useNavigation } from "@react-navigation/native";
 moment().locale("pt-br");
 
 export const List: React.FC<Props> = ({ content, date, sessionId }): ReactElement => {
     const { navigate } = useNavigation<any>();
-
+    console.log(sessionId);
     return (
         <View className={styles["container"]}>
             <View>
-                <Text className={styles["content"]}>{moment(date.slice(0, date.length - 9)).format("LLLL").replace(" às 00:00", "").toLocaleUpperCase()}</Text>
+                <Text className={styles["content"]}>{date.toLocaleUpperCase()}</Text>
             </View>
             {content.map((item, index) =>
                 <Pressable onPress={() => navigate("SessionResume", { id: item.id, sessionId })}

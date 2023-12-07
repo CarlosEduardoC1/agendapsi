@@ -16,7 +16,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'SessionResume'>;
 export const SessionResume: React.FC<Props> = ({ route }): React.ReactElement => {
     const { pacientData, sessionData } = useComponent({ ...route.params });
     const { renderForm } = useCustomForm({ sessionData });
-
+    
     return (
         <View className={styles["container"]}>
             <NativeBaseProvider>

@@ -3,13 +3,14 @@ import { ChartData, State, UseComponent } from "./@types";
 import { INITIAL_STATE, OPTIONS } from "./config";
 import { useFetch } from "../useFetch";
 import { getLastsSixMonths, defaultChartData } from "./utils";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 export const useComponent = (): UseComponent => {
   const [{ chartData, oppenedSessions }, setState] =
     useState<State>(INITIAL_STATE);
   const { onGetReceived, onGetToReceive, onGetNotPayed } = useFetch();
   const { navigate, setOptions } = useNavigation<any>();
+  const isFocused = useIsFocused();
 
   const lastSixMonths = getLastsSixMonths();
 
@@ -38,7 +39,7 @@ export const useComponent = (): UseComponent => {
       ...state,
       chartData: allArr,
     }));
-  }, []);
+  }, [isFocused]);
 
   const getOppenedSessions = useCallback(async () => {
     const oppened = await onGetNotPayed();
@@ -46,7 +47,7 @@ export const useComponent = (): UseComponent => {
       ...state,
       oppenedSessions: oppened,
     }));
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     getChartData();

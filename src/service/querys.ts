@@ -137,13 +137,15 @@ export default class Querys extends DataBase {
       this.db.transaction(
         (tx) =>
           tx.executeSql(
-            `select sum(sessionValue) as soma from sessions where id_paciente = ${id} and payed = false group by id_paciente;`,
+            `select sessionValue from sessions where id_paciente = ${id} and payed = 0;`,
             [],
             (_, response) => {
+              console.log("WITH SOMA",response.rows._array);
               resolve(response.rows._array);
             },
 
-            (sqlError) => {
+            (sqlError, hasError) => {
+              console.log(hasError);
               reject(sqlError);
               return false;
             }
@@ -182,12 +184,14 @@ export default class Querys extends DataBase {
     return new Promise((resolve, reject) => {
       this.db.transaction((tx) =>
         tx.executeSql(
-          `select * from sessions where id_paciente = ${id}`,
+          `select a.*, b.nome, b.id as pacientId, b.telefone from sessions a join pacient b on a.id_paciente = b.id where b.id = ${id} group by a.id;`,
           [],
           (_, response) => {
+            console.log(response.rows._array);
             resolve(response.rows._array);
           },
-          (sqlError) => {
+          (sqlError, real) => {
+            console.log("REAL ERRRROR", real);
             reject(sqlError);
             return false;
           }
@@ -240,7 +244,7 @@ export default class Querys extends DataBase {
     return new Promise((resolve, reject) => {
       this.db.transaction((tx) =>
         tx.executeSql(
-          `select * from sessions a join pacient b on a.id_paciente = b.id where b.nome like '%${name}%' ;`,
+          `select a.*, b.nome, b.id as pacientId, b.telefone from sessions a join pacient b on a.id_paciente = b.id where b.nome like '%${name}%';`,
           [],
           (_, response) => {
             resolve(response.rows._array);

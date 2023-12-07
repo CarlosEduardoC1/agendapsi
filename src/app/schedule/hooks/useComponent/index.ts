@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { State, UseComponent } from "./@types";
 import { INITIAL_STATE } from "../../config";
 import { Mode } from "../../../../@types";
-import { usePacient, useSession } from "../../../../hooks";
-import { Props as List } from "../../../../components/List/@types";
+import { useSession } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
 
-import "dayjs/locale/pt-br";
-import dayjs from "dayjs";
-dayjs.locale("pt-br");
+import moment from "moment";
+import "moment/locale/pt-br";
+moment().locale("pt-br");
 
 export const useComponent = (): UseComponent => {
   const [{ mode, list, loading, search }, setState] =
     useState<State>(INITIAL_STATE);
   const { onGetByPacientSearch } = useSession();
-  const { onGetSingle } = usePacient();
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -25,32 +23,29 @@ export const useComponent = (): UseComponent => {
           loading: true,
         }));
 
-        const result: List[] = [];
         const response = await onGetByPacientSearch(search);
-        if (response) {
-          for (let i = 0; i < response?.length; i++) {
-            const pacient = await onGetSingle(response[i].id_paciente);
-            dayjs(response[i].schedule_date).format(
-              mode === "list" ? "LLLL" : "YYYY-MM-DD HH:mm:ss"
-            );
-            if (pacient.nome) {
-              result.push({
-                date: String(response[i].schedule_date),
-                sessionId: String(response[i].id),
-                content: [
-                  {
-                    id: String(pacient.id),
-                    pacientName: pacient.nome,
-                    sessionHour: String(response[i].schedule_date),
-                  },
-                ],
-              });
-            }
-          }
-        }
+        const formated = (response as any).reduce(
+          (
+            catMemo: any,
+            { schedule_date, id, id_paciente, nome }: any
+          ) => {
+            console.log(id);
+            const asDate = moment(schedule_date)
+              .format("LLLL")
+              .replace(` às ${moment(schedule_date).format("HH:mm")}`, "");
+            (catMemo[asDate] = catMemo[asDate] || []).push({
+              pacientName: nome,
+              sessionHour: String(moment(schedule_date).format("HH:mm")),
+              id: id_paciente,
+              sessionId: id,
+            });
+            return catMemo;
+          },
+          {}
+        );
         setState((state) => ({
           ...state,
-          list: result,
+          list: formated,
         }));
       } catch (error) {
         console.log(error);

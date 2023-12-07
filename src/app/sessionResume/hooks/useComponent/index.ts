@@ -2,13 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import { Props, State, UseComponent } from "./@types";
 import { useFetch } from "../useFetch";
 import { INITIAL_STATE, OPTIONS } from "./config";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 export const useComponent = ({ id, sessionId }: Props): UseComponent => {
   const [{ pacientData, sessionData }, setState] =
     useState<State>(INITIAL_STATE);
   const { setOptions, goBack, navigate } = useNavigation<any>();
   const { onGetPacient, onGetSession } = useFetch();
+  const isFocused = useIsFocused();
 
   const getPacient = useCallback(async () => {
     const response = await onGetPacient(id);
@@ -16,15 +17,16 @@ export const useComponent = ({ id, sessionId }: Props): UseComponent => {
       ...state,
       pacientData: response,
     }));
-  }, [id]);
-
+  }, [id, isFocused]);
+  
   const getSessions = useCallback(async () => {
     const response = await onGetSession(sessionId);
+    console.log(response);
     setState((state) => ({
       ...state,
       sessionData: response,
     }));
-  }, [sessionId]);
+  }, [sessionId, isFocused]);
 
   useEffect(() => {
     getPacient();

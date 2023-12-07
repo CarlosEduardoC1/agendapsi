@@ -1,11 +1,12 @@
-import { ActivityIndicator, ScrollView, View } from "react-native"
+import { ActivityIndicator, Pressable, ScrollView, View } from "react-native"
 import styles from "./styles.module.scss";
 import { SearchBar } from '@rneui/themed';
 import { FAB } from '@rneui/themed';
 import { useComponent } from "./hooks";
-import { List } from "../../components/List";
 import { Calendar } from "../../components/Calendar";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
     PaymentReport: { pacient_id: string | number };
@@ -14,6 +15,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'PaymentReport'>;
 
 export const PaymentReport: React.FC<Props> = ({ route }): React.ReactElement => {
+    const { navigate } = useNavigation<any>();
 
     const { changeMode, mode, list, loading } = useComponent({ pacient_id: String(route.params.pacient_id) });
 
@@ -32,15 +34,26 @@ export const PaymentReport: React.FC<Props> = ({ route }): React.ReactElement =>
                 containerStyle={{ backgroundColor: "black" }}
 
             />
-            <ScrollView>
+            <ScrollView style={{ flex: 1, padding: 12 }}>
                 {mode === "list" ? (
                     <>
-                        {list.map((item, index) => <List
-                            sessionId={String(item.id)}
-                            key={`${item.id_paciente}-${index}`}
-                            content={list.map(itm => ({ id: String(itm.id), pacientName: itm.payed ? "recebido" : "a receber", sessionHour: String(itm.schedule_date) }))}
-                            date={String(item.schedule_date)}
-                        />)}
+                        {Object.keys(list).map((item, index) =>
+                            <View key={`${item}-${index}`} style={{ marginTop: 10 }}>
+                                <View>
+                                    <Text className={styles["content"]}>{item.toLocaleUpperCase()}</Text>
+                                </View>
+                                {
+                                    (list[item as any] as any).map((itm: any, i: number) =>{
+                                        console.log(itm);
+                                        return(
+                                        <Pressable onPress={() => navigate("SessionResume", { id: itm.id, sessionId: itm.sessionId })}
+                                            key={`${itm.pacientName}-${i}`} className={styles["title-container"]}>
+                                            <Text className={styles["content"]}>{itm.pacientName}</Text>
+                                            <Text className={styles["info"]}>{itm.sessionHour}</Text>
+                                        </Pressable>
+                                    )})
+                                }
+                            </View>)}
                     </>
                 ) : <Calendar list={list} startDateParam={"schedule_date"} titleParam={"verification"} />}
             </ScrollView>

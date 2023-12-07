@@ -8,7 +8,7 @@ export type UseComponent = State & {
 
 export type State = {
   mode: Mode;
-  list: Schedule<List>;
+  list: any;
   loading: boolean;
   search: string;
 };
