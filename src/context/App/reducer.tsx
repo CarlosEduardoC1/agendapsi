@@ -5,7 +5,8 @@ import { Actions, ActionTypes, GlobalContextProps, GlobalState } from "./models"
 export const initialState: GlobalState = {
   activeTab: "schedule",
   onPressActiveTab: () => { },
-  editPacientName: { email: "", nome: "", telefone: "", valor: "" }
+  registerPage: false,
+  isLogged: false
 };
 
 const Context = createContext({} as GlobalContextProps);
@@ -18,16 +19,12 @@ const reducer = (state: GlobalState, action: Actions): GlobalState => {
     case ActionTypes.ACTIVE_TAB_CALLBACK: {
       return { ...state, onPressActiveTab: action.payload };
     }
-    case ActionTypes.REMOVE_TAB_CALLBACK: {
-      return { ...state, onPressActiveTab: () => { } };
+    case ActionTypes.SHOW_REGISTER_PAGE: {
+      return { ...state, registerPage: action.payload };
     }
-    case ActionTypes.EDIT_PACIENT_NAME: {
-      return { ...state, editPacientName: action.payload };
+    case ActionTypes.SET_LOGGED: {
+      return { ...state, isLogged: action.payload };
     }
-    case ActionTypes.REMOVE_EDIT_PACIENT: {
-      return { ...state, editPacientName: { email: "", nome: "", telefone: "", valor: "" } };
-    }
-
     default: {
       throw new Error(`Unsupported action type: ${action}`);
     }

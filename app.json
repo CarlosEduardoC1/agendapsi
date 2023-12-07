@@ -4,7 +4,7 @@
     "slug": "agendapsi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/hatching-chick.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "scheme": "myapp",
     "experiments": {
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/hatching-chick.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.ninho.agenda"
@@ -35,6 +35,12 @@
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-updates",
+        {
+          "username": "account-username"
         }
       ]
     ],

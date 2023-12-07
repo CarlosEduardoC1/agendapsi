@@ -30,10 +30,12 @@
     "expo-asset": "~8.10.1",
     "expo-constants": "~14.4.2",
     "expo-file-system": "~15.4.5",
+    "expo-image-picker": "~14.3.2",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.0",
     "expo-sqlite": "~11.3.3",
     "expo-status-bar": "~1.6.0",
+    "fiction-expo-restart": "^2.0.0",
     "moment": "^2.29.4",
     "native-base": "^3.4.28",
     "node-sass": "^9.0.0",
@@ -58,7 +60,7 @@
     "react-native-webview": "^13.6.3",
     "use-debounce": "^10.0.0",
     "yup": "^1.3.2",
-    "expo-image-picker": "~14.3.2"
+    "expo-updates": "~0.18.17"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
