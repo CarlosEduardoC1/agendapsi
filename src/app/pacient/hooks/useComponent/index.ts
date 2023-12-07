@@ -6,14 +6,14 @@ import { usePacient } from "../../../../hooks";
 import { useIsFocused} from "@react-navigation/native";
 
 export const useComponent = (): UseComponent => {
-  const [{ pacients, loading }, setState] = useState<State>(INITIAL_STATE);
-  const { onGetAll } = usePacient();
+  const [{ pacients, loading, search }, setState] = useState<State>(INITIAL_STATE);
+  const { onGetBySearch } = usePacient();
   const isFocused = useIsFocused();
 
   const getPacients = useCallback(async (): Promise<void> => {
     try {
       setLoading("show");
-      const response = await onGetAll();
+      const response = await onGetBySearch(search);
       setState((state) => ({
         ...state,
         pacients: response,
@@ -22,7 +22,7 @@ export const useComponent = (): UseComponent => {
     } finally {
       setLoading("hide");
     }
-  }, []);
+  }, [search]);
 
   useEffect(() => {
     getPacients();
@@ -34,8 +34,18 @@ export const useComponent = (): UseComponent => {
       loading: mode === "show",
     }));
   }
+
+  function changeSearch(text: string) {
+    setState((state) => ({
+      ...state,
+      search: text,
+    }));
+  }
+
   return {
     pacients,
     loading,
+    changeSearch,
+    search
   };
 };

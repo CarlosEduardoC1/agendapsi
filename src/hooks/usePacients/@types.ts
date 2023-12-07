@@ -8,4 +8,5 @@ export type UsePacient = {
   onDelete: (id: number) => Promise<Response>;
   onGetValues: (id: any) => Promise<any>;
   onGetSessionsQuantity: (id: any) => Promise<any>;
+  onGetBySearch: (t: string) => Promise<any>;
 };

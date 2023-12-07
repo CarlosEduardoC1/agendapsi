@@ -1,25 +1,19 @@
-import { ActivityIndicator, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import styles from "./styles.module.scss";
 import { SearchBar } from '@rneui/themed';
 import { useComponent } from "./hooks";
 import { List } from "./components";
 
 export const Pacient: React.FC<any> = (): React.ReactElement => {
-    const { pacients, loading } = useComponent();
-
-    if (loading) {
-        return (
-            <View className={styles["container"]}>
-                <ActivityIndicator />
-            </View>
-        )
-    }
+    const { pacients, search, changeSearch } = useComponent();
 
     return (
         <View className={styles["container"]}>
             <SearchBar
                 placeholder="Procurar"
                 containerStyle={{ backgroundColor: "black" }}
+                value={search}
+                onChangeText={changeSearch}
             />
             <ScrollView>
                 {

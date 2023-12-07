@@ -84,6 +84,15 @@ export const usePacient = (): UsePacient => {
     }
   }, []);
 
+  const onGetBySearch = useCallback(async (name: string) => {
+    try {
+      const values = await query.getPacientByName(name);
+      return values;
+    } catch (error) {
+      throw new Error("Não encontrado");
+    }
+  }, []);
+
   return {
     onSave,
     onGetAll,
@@ -92,5 +101,6 @@ export const usePacient = (): UsePacient => {
     onDelete,
     onGetValues,
     onGetSessionsQuantity,
+    onGetBySearch
   };
 };
