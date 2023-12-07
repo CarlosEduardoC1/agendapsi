@@ -99,6 +99,18 @@ export const useSession = (): UseSession => {
     }
   }, []);
 
+  const onGetByPacientSearch = useCallback(
+    async (text: string): Promise<any> => {
+      try {
+        const response = await query.getSessionByPacientName(text);
+        return response;
+      } catch (error) {
+        throw new Error("Nenhum dado encontrado");
+      }
+    },
+    []
+  );
+
   return {
     onSave,
     onGetAll,
@@ -108,5 +120,6 @@ export const useSession = (): UseSession => {
     onGetByPacient,
     onGetOnlyValuesByMonth,
     onGetOppened,
+    onGetByPacientSearch
   };
 };

@@ -9,4 +9,5 @@ export type UseSession = {
   onGetByPacient: (id: string) => Promise<Sessions[]>;
   onGetOnlyValuesByMonth: (month: Months, mode: SessionMode) => Promise<any>;
   onGetOppened: () => Promise<Sessions[]>;
+  onGetByPacientSearch: (t: string) => Promise<any>;
 };

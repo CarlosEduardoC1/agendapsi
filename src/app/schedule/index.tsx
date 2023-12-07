@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import styles from "./styles.module.scss";
 import { SearchBar } from '@rneui/themed';
 import { FAB } from '@rneui/themed';
@@ -7,21 +7,15 @@ import { List } from "../../components/List";
 import { Calendar } from "../../components/Calendar";
 
 export const Schedule: React.FC = (): React.ReactElement => {
-    const { changeMode, mode, list, loading } = useComponent();
+    const { changeMode, mode, list, changeSearch, search } = useComponent();
 
-    if (loading) {
-        return (
-            <View>
-                <ActivityIndicator  />
-            </View>
-        )
-    }
     return (
         <View className={styles["container"]}>
             <SearchBar
                 placeholder="Procurar"
+                value={search}
                 containerStyle={{ backgroundColor: "black" }}
-
+                onChangeText={changeSearch}
             />
             <ScrollView>
                 {mode === "list" ? (

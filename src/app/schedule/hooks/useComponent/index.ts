@@ -11,8 +11,9 @@ import dayjs from "dayjs";
 dayjs.locale("pt-br");
 
 export const useComponent = (): UseComponent => {
-  const [{ mode, list, loading }, setState] = useState<State>(INITIAL_STATE);
-  const { onGetAll } = useSession();
+  const [{ mode, list, loading, search }, setState] =
+    useState<State>(INITIAL_STATE);
+  const { onGetByPacientSearch } = useSession();
   const { onGetSingle } = usePacient();
   const isFocused = useIsFocused();
 
@@ -25,7 +26,7 @@ export const useComponent = (): UseComponent => {
         }));
 
         const result: List[] = [];
-        const response = await onGetAll();
+        const response = await onGetByPacientSearch(search);
         if (response) {
           for (let i = 0; i < response?.length; i++) {
             const pacient = await onGetSingle(response[i].id_paciente);
@@ -60,7 +61,7 @@ export const useComponent = (): UseComponent => {
         }));
       }
     })();
-  }, [mode, isFocused]);
+  }, [mode, isFocused, search]);
 
   function changeMode(mode: Mode) {
     setState((state) => ({
@@ -69,10 +70,19 @@ export const useComponent = (): UseComponent => {
     }));
   }
 
+  function changeSearch(text: string) {
+    setState((state) => ({
+      ...state,
+      search: text,
+    }));
+  }
+
   return {
     mode,
     changeMode,
     list,
     loading,
+    search,
+    changeSearch,
   };
 };

@@ -235,4 +235,22 @@ export default class Querys extends DataBase {
       );
     });
   }
+  public getSessionByPacientName(name: string): Promise<Sessions[]> {
+    return new Promise((resolve, reject) => {
+      this.db.transaction((tx) =>
+        tx.executeSql(
+          `select * from sessions a join pacient b on a.id_paciente = b.id where b.nome like '%${name}%' ;`,
+          [],
+          (_, response) => {
+            resolve(response.rows._array);
+          },
+          (sqlError, realError) => {
+            console.log("REAL ERROR", realError);
+            reject(realError);
+            return false;
+          }
+        )
+      );
+    });
+  }
 }
