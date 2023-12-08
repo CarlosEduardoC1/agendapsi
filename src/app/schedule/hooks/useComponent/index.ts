@@ -29,7 +29,7 @@ export const useComponent = (): UseComponent => {
             catMemo: any,
             { schedule_date, id, id_paciente, nome }: any
           ) => {
-            console.log(id);
+            
             const asDate = moment(schedule_date)
               .format("LLLL")
               .replace(` às ${moment(schedule_date).format("HH:mm")}`, "");

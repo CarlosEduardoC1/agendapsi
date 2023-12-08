@@ -10,8 +10,8 @@ import { Props } from "./@types";
 export const Calendar: React.FC<Props> = ({ list, titleParam, startDateParam }): React.ReactElement => {
     const { week } = weekDays();
     const weekDatesNumber = weekDates();
-    const todayWithMonthAndYear = dayjs().format("D [de] MMMM [de] YYYY");
-    const [selectedDay, setSelectedDay] = useState("");
+    const todayWithMonthAndYear = dayjs().format("DD [de] MMMM [de] YYYY");
+    const [selectedDay, setSelectedDay] = useState(dayjs().format("DD"));
     const [renderedItems, setRenderedItems] = useState<any[]>([]);
 
     function verifyTitleParam(payed: boolean): string {
@@ -20,15 +20,27 @@ export const Calendar: React.FC<Props> = ({ list, titleParam, startDateParam }):
     }
 
     useEffect(() => {
-        setSelectedDay(dayjs().format("D"));
-        if (list.length > 0) {
-            setRenderedItems(list.map(item => ({
-                title: item[titleParam === "verification" ? verifyTitleParam(item.payed) : titleParam],
-                startDate: moment(item[startDateParam]).toDate() as any,
-                endDate: moment(item[startDateParam]).subtract(1, "hour").toDate()
-            })))
+
+        const keys = Object.keys(list);
+        if (keys.length > 0) {
+            const data: any[] = [];
+            keys.map((item: any) => {
+                return list[item].map((element: any) => {
+                    const day = moment(item + " às " + element.sessionHour, 'LLLL');
+
+                    if (day.format("DD/MM") === selectedDay + "/" + moment().format("MM")) {
+                        data.push({
+                            title: element[titleParam === "verification" ? verifyTitleParam(item.payed) : titleParam],
+                            startDate: moment(item + " às " + element.sessionHour, 'LLLL') as any,
+                            endDate: moment(item + " às " + element.sessionHour, 'LLLL').subtract(1, "hour")
+                        });
+                    }
+                })
+            });
+
+            setRenderedItems(data);
         }
-    }, []);
+    }, [selectedDay]);
 
     return (
         <View >

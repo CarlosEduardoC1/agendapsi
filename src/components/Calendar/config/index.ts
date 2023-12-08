@@ -11,14 +11,14 @@ export function weekDates(): string[] {
   const today = dayjs();
 
   for (let i = 0; i <= todayInNumber; i++) {
-    days.push(today.subtract(todayInNumber - i, "day").format("D"));
+    days.push(today.subtract(todayInNumber - i, "day").format("DD"));
   }
 
   const daysToAdd = 7 - days.length;
 
   if (todayInNumber < 6) {
     for (let i = 1; i <= daysToAdd; i++) {
-      days.push(today.add(i, "day").format("D"));
+      days.push(today.add(i, "day").format("DD"));
     }
   }
   return days;

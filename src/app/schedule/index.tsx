@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 export const Schedule: React.FC = (): React.ReactElement => {
     const { navigate } = useNavigation<any>();
     const { changeMode, mode, list, changeSearch, search } = useComponent();
-    
+
     return (
         <View className={styles["container"]}>
             <SearchBar
@@ -24,7 +24,7 @@ export const Schedule: React.FC = (): React.ReactElement => {
                 {mode === "list" ? (
                     <>
                         {Object.keys(list).map((item, index) =>
-                            <View style={{ marginTop: 10 }}>
+                            <View key={`${item}-${index}`} style={{ marginTop: 10 }}>
                                 <View>
                                     <Text className={styles["content"]}>{item.toLocaleUpperCase()}</Text>
                                 </View>
@@ -39,11 +39,11 @@ export const Schedule: React.FC = (): React.ReactElement => {
                                 }
                             </View>)}
                     </>
-                ) : <Calendar list={list} startDateParam={"pacientName"} titleParam={"sessionHour"} />}
+                ) : <Calendar list={list} startDateParam={"sessionHour"} titleParam={"pacientName"} />}
             </ScrollView>
             <FAB
                 visible={true}
-                icon={{ name: mode, color: 'white' }}
+                icon={{ name: mode === "event" ? "list" : "event", color: 'white' }}
                 size="large"
                 placement="right"
                 onPress={() => changeMode(mode === "list" ? "event" : "list")}
