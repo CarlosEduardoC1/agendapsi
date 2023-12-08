@@ -7,7 +7,8 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import moment from "moment";
 
 export const useComponent = ({ pacient_id }: Props): UseComponent => {
-  const [{ list, loading, mode }, setState] = useState<State>(INITIAL_STATE);
+  const [{ list, loading, mode, openFilter, filter }, setState] =
+    useState<State>(INITIAL_STATE);
   const { getSessions } = useFetch();
   const { setOptions, goBack } = useNavigation();
   const isFocused = useIsFocused();
@@ -15,7 +16,7 @@ export const useComponent = ({ pacient_id }: Props): UseComponent => {
   const handleGetSessions = useCallback(async () => {
     try {
       const response = await getSessions(pacient_id);
-      
+
       const formated = (response as any).reduce(
         (catMemo: any, { schedule_date, payed, id, id_paciente }: any) => {
           console.log(id);
@@ -51,7 +52,7 @@ export const useComponent = ({ pacient_id }: Props): UseComponent => {
     setOptions({
       ...OPTIONS(
         () => goBack(),
-        () => console.log("FILTER")
+        () => handleFilter(true)
       ),
     });
   }
@@ -63,10 +64,28 @@ export const useComponent = ({ pacient_id }: Props): UseComponent => {
     }));
   }
 
+  function handleFilter(open: boolean) {
+    setState((state) => ({
+      ...state,
+      openFilter: open,
+    }));
+  }
+
+  function setFilter(selected: string) {
+    setState((state) => ({
+      ...state,
+      filter: selected,
+    }));
+  }
+
   return {
     list,
     loading,
     mode,
     changeMode,
+    openFilter,
+    handleFilter,
+    filter,
+    setFilter
   };
 };

@@ -7,6 +7,8 @@ import { Calendar } from "../../components/Calendar";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Filter } from "./component/Filter";
+import { useState } from "react";
 
 type RootStackParamList = {
     PaymentReport: { pacient_id: string | number };
@@ -16,8 +18,8 @@ type Props = NativeStackScreenProps<RootStackParamList, 'PaymentReport'>;
 
 export const PaymentReport: React.FC<Props> = ({ route }): React.ReactElement => {
     const { navigate } = useNavigation<any>();
-
-    const { changeMode, mode, list, loading } = useComponent({ pacient_id: String(route.params.pacient_id) });
+    const [search, setSearch] = useState("");
+    const { changeMode, mode, list, loading, openFilter, handleFilter, filter, setFilter } = useComponent({ pacient_id: String(route.params.pacient_id) });
 
     if (loading) {
         return (
@@ -32,7 +34,22 @@ export const PaymentReport: React.FC<Props> = ({ route }): React.ReactElement =>
             <SearchBar
                 placeholder="Procurar"
                 containerStyle={{ backgroundColor: "black" }}
+                value={search}
+                onChangeText={tx => {
+                    setSearch(tx);
+                    if (tx === "") {
+                        setFilter("Tudo");
+                    }
+                    else {
+                        setFilter(tx);
+                    }
+                }}
 
+            />
+            <Filter
+                isOpen={openFilter}
+                onClose={() => handleFilter(false)}
+                onFilter={(t: string) => { setFilter(t); handleFilter(false) }}
             />
             <ScrollView style={{ flex: 1, padding: 12 }}>
                 {mode === "list" ? (
@@ -43,15 +60,21 @@ export const PaymentReport: React.FC<Props> = ({ route }): React.ReactElement =>
                                     <Text className={styles["content"]}>{item.toLocaleUpperCase()}</Text>
                                 </View>
                                 {
-                                    (list[item as any] as any).map((itm: any, i: number) =>{
-                                        console.log(itm);
-                                        return(
-                                        <Pressable onPress={() => navigate("SessionResume", { id: itm.id, sessionId: itm.sessionId })}
-                                            key={`${itm.pacientName}-${i}`} className={styles["title-container"]}>
-                                            <Text className={styles["content"]}>{itm.pacientName}</Text>
-                                            <Text className={styles["info"]}>{itm.sessionHour}</Text>
-                                        </Pressable>
-                                    )})
+                                    (list[item as any] as any).map((itm: any, i: number) => {
+                                        if (itm.pacientName === filter.toLocaleLowerCase()
+                                            || filter === "Tudo"
+                                            || filter === ""
+                                            || itm.pacientName.includes(filter.toLocaleLowerCase())) {
+
+                                            return (
+                                                <Pressable onPress={() => navigate("SessionResume", { id: itm.id, sessionId: itm.sessionId })}
+                                                    key={`${itm.pacientName}-${i}`} className={styles["title-container"]}>
+                                                    <Text className={styles["content"]}>{itm.pacientName}</Text>
+                                                    <Text className={styles["info"]}>{itm.sessionHour}</Text>
+                                                </Pressable>
+                                            )
+                                        }
+                                    })
                                 }
                             </View>)}
                     </>

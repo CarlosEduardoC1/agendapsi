@@ -6,6 +6,8 @@ export const INITIAL_STATE: State = {
     list: [],
     loading: false,
     mode: "list",
+    openFilter: false,
+    filter: ""
 };
 
 export const OPTIONS = (leftPress: any, rightPress: any) => {
