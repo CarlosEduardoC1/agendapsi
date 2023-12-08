@@ -13,6 +13,7 @@ export const INITIAL_STATE: State = {
 export const OPTIONS = (leftPress: any, rightPress: any) => {
     return {
         title: 'Relatório de pagamento',
+        backBehavior: "none",
         headerLeft: () => <Pressable
             onPress={leftPress}
             style={{

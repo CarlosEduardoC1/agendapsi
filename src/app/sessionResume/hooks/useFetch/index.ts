@@ -26,7 +26,6 @@ export const useFetch = (): UseFetch => {
   const onUpdateSession = useCallback(async (data: Sessions): Promise<void> => {
     try {
       const updt = await onUpdate(Number(data.id), data);
-      console.log("UPDT", updt);
     } catch (error) {
       throw new Error(JSON.stringify(error));
     }

@@ -32,7 +32,6 @@ export const EditSession: React.FC<Props> = ({ route }): React.ReactElement => {
 
     useEffect(() => {
         if (sessions !== null || sessions !== undefined) {
-            console.log("SEXONS",sessions);
             reset({
                 sessionValue: sessions?.sessionValue,
                 schedule_date: parseDate(sessions?.schedule_date as Date)

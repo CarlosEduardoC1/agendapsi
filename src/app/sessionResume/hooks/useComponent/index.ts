@@ -21,7 +21,6 @@ export const useComponent = ({ id, sessionId }: Props): UseComponent => {
   
   const getSessions = useCallback(async () => {
     const response = await onGetSession(sessionId);
-    console.log(response);
     setState((state) => ({
       ...state,
       sessionData: response,

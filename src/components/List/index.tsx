@@ -12,7 +12,6 @@ moment().locale("pt-br");
 
 export const List: React.FC<Props> = ({ content, date, sessionId }): ReactElement => {
     const { navigate } = useNavigation<any>();
-    console.log(sessionId);
     return (
         <View className={styles["container"]}>
             <View>

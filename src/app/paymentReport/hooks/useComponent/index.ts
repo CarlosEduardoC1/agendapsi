@@ -19,7 +19,6 @@ export const useComponent = ({ pacient_id }: Props): UseComponent => {
 
       const formated = (response as any).reduce(
         (catMemo: any, { schedule_date, payed, id, id_paciente }: any) => {
-          console.log(id);
           const asDate = moment(schedule_date)
             .format("LLLL")
             .replace(` às ${moment(schedule_date).format("HH:mm")}`, "");

@@ -64,7 +64,7 @@ const DrawerNavigator = () => {
   }, [getUser]);
 
   return (
-    <Drawer.Navigator screenOptions={SCREEN_OPTIONS(state.activeTab)} drawerContent={() => DrawerContent({ user, exit, logged: state.isLogged })}>
+    <Drawer.Navigator backBehavior="history" screenOptions={SCREEN_OPTIONS(state.activeTab)} drawerContent={() => DrawerContent({ user, exit, logged: state.isLogged })}>
       <Drawer.Screen name="Agenda" component={Schedule} />
       <Drawer.Screen name="Paciente" component={Pacient} />
       <Drawer.Screen name="AddSession" component={AddSession} />

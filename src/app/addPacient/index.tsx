@@ -37,7 +37,6 @@ export const AddPacient: React.FC<Props> = ({ route }): React.ReactElement => {
 
     useEffect(() => {
         if (isFocused) {
-        console.log("PARAMOS",route.params);
             if (route?.params?.isEditable) {
                 reset({ ...route?.params?.pacient })
             } else {
